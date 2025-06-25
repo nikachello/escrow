@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 };
 
 const sizeMap = {
-  sm: 'text-lg',
-  md: 'text-2xl',
-  lg: 'text-4xl',
+  sm: "text-lg",
+  md: "text-2xl",
+  lg: "text-4xl",
 };
 
-const Logo = ({ size = 'sm' }: Props) => {
+const Logo = ({ size = "sm" }: Props) => {
   return (
-    <div className={`font-bold text-secondary ${sizeMap[size]}`}>
+    <div className={`cursor-pointer font-bold text-secondary ${sizeMap[size]}`}>
       Garanti
     </div>
   );

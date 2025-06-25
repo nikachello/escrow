@@ -41,10 +41,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@utility container {
-  padding-inline: 10px;
-}
-
 :root {
   --radius: 0.625rem;
 
@@ -91,6 +87,8 @@
   --sidebar-accent-foreground: #050505;
   --sidebar-border: #dddddd;
   --sidebar-ring: #a0a0a0;
+
+  --font-heading: "Heading", ui-sans-serif;
 }
 
 .dark {
@@ -144,5 +142,19 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@font-face {
+  font-family: "Heading";
+  src: url("/fonts/heading.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading);
   }
 }
