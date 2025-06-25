@@ -1,5 +1,5 @@
 import React from "react";
-import ContentContainer from "../containers/ContentContainer";
+import ContentContainer from "../../containers/ContentContainer";
 import CreateDealLanding from "./CreateDealLanding";
 
 const AboutLanding = () => {
