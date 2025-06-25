@@ -11,9 +11,11 @@ import { DealForm } from "./DealForm";
 
 const CreateDealLanding = () => {
   return (
-    <Card className="w-3/4 md:w-full lg:w-full text-center">
+    <Card className="w-3/4 md:w-full lg:w-full text-center tracking-wide">
       <CardHeader className="font-heading">
-        <CardTitle className="text-2xl">შექმენი გარიგება</CardTitle>
+        <CardTitle className="text-2xl tracking-wide">
+          შექმენი გარიგება
+        </CardTitle>
         <CardDescription>
           დაიწყე უსაფრთხო გარიგება შუამავლის დახმარებით
         </CardDescription>
