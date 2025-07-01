@@ -8,8 +8,9 @@ const HowItWorks = () => {
       <Image
         src="/images/escrow.jpg"
         alt="ესქროუ ფოტო"
-        width={650}
+        width={500}
         height={200}
+        className="w-full"
       />
     </LandingSection>
   );
