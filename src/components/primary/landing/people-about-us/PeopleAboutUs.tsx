@@ -42,7 +42,7 @@ const testimonialsBrands = [
 
 const PeopleAboutUs = () => {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden pb-15">
       <LandingSection heading="რას ამბობენ ჩვენზე?">
         <InfiniteMovingCards
           items={testimonialsPeople}

@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import React from "react";
+import { Control, FieldValues, Path } from "react-hook-form";
 
 interface Option {
   id: string | number;
@@ -20,28 +21,28 @@ interface Option {
   name_en?: string;
 }
 
-interface SelectFieldProps {
-  name: string;
+interface SelectFieldProps<T extends FieldValues> {
+  name: Path<T>;
   label: string;
   placeholder: string;
   options: Option[];
-  control: any;
+  control: Control<T>;
 }
 
-const SelectField = ({
+const SelectField = <T extends FieldValues>({
   name,
   label,
   placeholder,
   options,
   control,
-}: SelectFieldProps) => {
+}: SelectFieldProps<T>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel className="w-full">{label}</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={(value) => {
               field.onChange(value);
@@ -55,13 +56,11 @@ const SelectField = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {options.map((option) => {
-                return (
-                  <SelectItem key={option.id} value={String(option.id)}>
-                    {option.name_ka}
-                  </SelectItem>
-                );
-              })}
+              {options.map((option) => (
+                <SelectItem key={option.id} value={String(option.id)}>
+                  {option.name_ka}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <FormMessage />

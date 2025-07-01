@@ -12,8 +12,10 @@ const sizeMap = {
 
 const Logo = ({ size = "sm" }: Props) => {
   return (
-    <div className={`cursor-pointer font-bold text-secondary ${sizeMap[size]}`}>
-      Garanti
+    <div
+      className={`cursor-pointer font-bold font-heading text-secondary ${sizeMap[size]}`}
+    >
+      Garanti.ge
     </div>
   );
 };
