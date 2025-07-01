@@ -1,11 +1,12 @@
 import React, { ReactNode } from "react";
 import ContentContainer from "./ContentContainer";
+import { cn } from "@/lib/utils";
 
-type Props = { children: ReactNode };
+type Props = { bg?: String; children: ReactNode };
 
-const RoundedContainer = ({ children }: Props) => {
+const RoundedContainer = ({ bg = "bg-white", children }: Props) => {
   return (
-    <div className="relative -mt-5 rounded-t-3xl bg-white">
+    <div className={cn("relative -mt-5 rounded-t-3xl", bg)}>
       <ContentContainer>{children}</ContentContainer>
     </div>
   );
