@@ -42,19 +42,21 @@ const testimonialsBrands = [
 
 const PeopleAboutUs = () => {
   return (
-    <LandingSection heading="რას ამბობენ ჩვენზე?">
-      <InfiniteMovingCards
-        items={testimonialsPeople}
-        className="text-center"
-        speed="fast"
-      />
-      <InfiniteMovingCards
-        items={testimonialsBrands}
-        className="text-center"
-        speed="fast"
-        direction="right"
-      />
-    </LandingSection>
+    <div className="overflow-x-hidden">
+      <LandingSection heading="რას ამბობენ ჩვენზე?">
+        <InfiniteMovingCards
+          items={testimonialsPeople}
+          className="text-center"
+          speed="normal"
+        />
+        <InfiniteMovingCards
+          items={testimonialsBrands}
+          className="text-center"
+          speed="normal"
+          direction="right"
+        />
+      </LandingSection>
+    </div>
   );
 };
 
