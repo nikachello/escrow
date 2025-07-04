@@ -12,20 +12,24 @@ type Props = {};
 
 const SignUpDialog = (props: Props) => {
   return (
-    <Dialog>
-      <DialogTrigger>
-        <Button
-          size="lg"
-          className="bg-gradient-to-r from-orange-300 to-yellow-200 text-primary rounded-full px-6 py-2 shadow-md hover:brightness-110 transition cursor-pointer"
-        >
-          რეგისტრაცია
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogTitle className="text-2xl font-bold">დარეგისტრირდით</DialogTitle>
-        <SignupForm />
-      </DialogContent>
-    </Dialog>
+    <div>
+      <Dialog>
+        <DialogTrigger>
+          <Button
+            size="lg"
+            className="bg-gradient-to-r from-orange-300 to-yellow-200 text-primary rounded-full px-6 py-2 shadow-md hover:brightness-110 transition cursor-pointer"
+          >
+            რეგისტრაცია
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="overflow-y-auto max-h-screen mt-5 mb-5">
+          <DialogTitle className="text-2xl font-bold">
+            დარეგისტრირდით
+          </DialogTitle>
+          <SignupForm />
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 
