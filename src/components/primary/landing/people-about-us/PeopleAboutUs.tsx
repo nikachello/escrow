@@ -47,12 +47,12 @@ const PeopleAboutUs = () => {
         <InfiniteMovingCards
           items={testimonialsPeople}
           className="text-center"
-          speed="normal"
+          speed="slow"
         />
         <InfiniteMovingCards
           items={testimonialsBrands}
           className="text-center"
-          speed="normal"
+          speed="slow"
           direction="right"
         />
       </LandingSection>
