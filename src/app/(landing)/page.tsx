@@ -1,15 +1,45 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Navbar from "@/components/primary/navbar/Navbar";
 import RoundedContainer from "@/components/primary/containers/RoundedContainer";
 import Footer from "@/components/primary/footer/Footer";
-import Faq from "@/components/primary/landing/faq/Faq";
-import HowItWorks from "@/components/primary/landing/how-it-works/HowItWorks";
 import AboutLanding from "@/components/primary/landing/landing-convert/AboutLanding";
-import OfferForSellers from "@/components/primary/landing/offer-for-sellers/OfferForSellers";
+import HowItWorks from "@/components/primary/landing/how-it-works/HowItWorks";
 import PeopleAboutUs from "@/components/primary/landing/people-about-us/PeopleAboutUs";
-import Navbar from "@/components/primary/navbar/Navbar";
+import OfferForSellers from "@/components/primary/landing/offer-for-sellers/OfferForSellers";
+import Faq from "@/components/primary/landing/faq/Faq";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+
+  useEffect(() => {
+    const param = searchParams.get("email-verified");
+    if (param === "success") {
+      setIsEmailVerified(true);
+
+      // Clear URL param from browser
+      window.history.replaceState(null, "", window.location.pathname);
+
+      // Hide the success message after 5 seconds
+      const timer = setTimeout(() => {
+        setIsEmailVerified(false);
+      }, 5000);
+
+      // Cleanup timer if component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
+
   return (
     <div className="w-full tracking-wider">
+      {isEmailVerified && (
+        <div className="text-green-600 text-center py-4">
+          ✅ ელ-ფოსტა წარმატებით დადასტურდა!
+        </div>
+      )}
+
       <Navbar />
       <AboutLanding />
       <RoundedContainer>

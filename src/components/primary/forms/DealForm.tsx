@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 
 import { DEAL_CATEGORIES, USER_ROLES } from "@/lib/constants";
-import SelectField from "../../form/SelectField";
+import SelectField from "./SelectField";
 import { Input } from "@/components/ui/input";
 
 export const DealForm = () => {

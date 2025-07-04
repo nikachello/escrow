@@ -10,8 +10,12 @@ generator client {
 
 model User {
   id            String    @id
+  nationalId String
+  firstName String
+  lastName String
   name          String
   email         String
+  phone String
   emailVerified Boolean
   image         String?
   createdAt     DateTime
@@ -20,6 +24,8 @@ model User {
   accounts      Account[]
 
   @@unique([email])
+  @@unique([nationalId])
+  @@unique([phone])
   @@map("user")
 }
 

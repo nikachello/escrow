@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { DealForm } from "./DealForm";
+import { DealForm } from "../../forms/DealForm";
 
 const CreateDealLanding = () => {
   return (
