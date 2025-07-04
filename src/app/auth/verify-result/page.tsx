@@ -1,10 +1,21 @@
 "use client";
 
-import { redirect, useSearchParams } from "next/navigation";
+import React, { Suspense, useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
-export default function VerifyResultPage() {
+function VerifyResult() {
   const searchParams = useSearchParams();
-  const status = searchParams.get("status");
+  const router = useRouter();
+  const [status, setStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    const s = searchParams.get("status");
+    if (s === "invalid_token") {
+      setStatus(s);
+    } else {
+      router.replace("/?email-verified=success");
+    }
+  }, [searchParams, router]);
 
   if (status === "invalid_token") {
     return (
@@ -14,5 +25,13 @@ export default function VerifyResultPage() {
     );
   }
 
-  redirect("/?email-verified=success");
+  return null; // While redirecting
+}
+
+export default function VerifyResultPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyResult />
+    </Suspense>
+  );
 }

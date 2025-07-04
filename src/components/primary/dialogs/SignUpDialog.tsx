@@ -8,9 +8,7 @@ import {
 import React from "react";
 import { SignupForm } from "../forms/auth/SignUpForm";
 
-type Props = {};
-
-const SignUpDialog = (props: Props) => {
+const SignUpDialog = () => {
   return (
     <div>
       <Dialog>

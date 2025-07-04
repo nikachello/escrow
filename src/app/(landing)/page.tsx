@@ -1,6 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+
 import Navbar from "@/components/primary/navbar/Navbar";
 import RoundedContainer from "@/components/primary/containers/RoundedContainer";
 import Footer from "@/components/primary/footer/Footer";
@@ -11,6 +13,14 @@ import OfferForSellers from "@/components/primary/landing/offer-for-sellers/Offe
 import Faq from "@/components/primary/landing/faq/Faq";
 
 export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
   const searchParams = useSearchParams();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
@@ -19,15 +29,14 @@ export default function Home() {
     if (param === "success") {
       setIsEmailVerified(true);
 
-      // Clear URL param from browser
+      // Remove the query param from the URL without reload
       window.history.replaceState(null, "", window.location.pathname);
 
-      // Hide the success message after 5 seconds
+      // Hide the message after 5 seconds
       const timer = setTimeout(() => {
         setIsEmailVerified(false);
       }, 5000);
 
-      // Cleanup timer if component unmounts
       return () => clearTimeout(timer);
     }
   }, [searchParams]);
