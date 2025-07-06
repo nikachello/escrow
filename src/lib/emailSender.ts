@@ -24,6 +24,12 @@ export const sendVerificationEmail = async ({
     html: `<p>დააჭირეთ <a href=${url}>აქ</a></p>`,
   };
 
-  const info = await transporter.sendMail(mailOptions);
-  console.log("Mailtrap sent: %s", info.messageId);
+  try {
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log("Mailtrap sent: %s", info.messageId);
+  } catch (error) {
+    console.log("can't send an email", error);
+    return error;
+  }
 };

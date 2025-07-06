@@ -14,7 +14,7 @@ import Faq from "@/components/primary/landing/faq/Faq";
 
 export default function Home() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loadings...</div>}>
       <HomeContent />
     </Suspense>
   );
@@ -49,7 +49,7 @@ function HomeContent() {
         </div>
       )}
 
-      <Navbar />
+      {/* <Navbar /> */}
       <AboutLanding />
       <RoundedContainer>
         <HowItWorks />

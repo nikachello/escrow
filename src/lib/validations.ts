@@ -49,3 +49,12 @@ export const signUpSchema = z
       });
     }
   });
+
+export const SignInSchema = z.object({
+  email: z.string().email({
+    message: "შეიყვანეთ ელ-ფოსტა",
+  }),
+  password: z.string().min(6, {
+    message: "მინიმუმ 6 სიმბოლო",
+  }),
+});
