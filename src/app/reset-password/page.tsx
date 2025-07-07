@@ -23,8 +23,8 @@ import {
 import { Input } from "@/components/ui/aceternity/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { authClient } from "@/lib/auth-client";
-import { resetPasswordSchema } from "@/lib/validations";
+import { authClient } from "@/lib/auth/auth-client";
+import { resetPasswordSchema } from "@/lib/auth/validations";
 
 const ResetPassword = () => {
   const router = useRouter();

@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signUpSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -15,7 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/aceternity/input";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
+import { signUpSchema } from "@/lib/auth/validations";
 
 type FormData = z.infer<typeof signUpSchema>;
 
