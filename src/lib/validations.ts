@@ -58,3 +58,26 @@ export const SignInSchema = z.object({
     message: "მინიმუმ 6 სიმბოლო",
   }),
 });
+
+export const forgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "შეიყვანეთ სწორი ელ-ფოსტა" })
+    .nonempty({ message: "ელ-ფოსტა სავალდებულოა" }),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(6, { message: "მინიმუმ 6 სიმბოლო" })
+      .max(20, { message: "მაქსიმუმ 20 სიმბოლო" }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "მინიმუმ 6 სიმბოლო" })
+      .max(20, { message: "მაქსიმუმ 20 სიმბოლო" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "პაროლები არ ემთხვევა",
+    path: ["confirmPassword"],
+  });

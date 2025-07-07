@@ -1,12 +1,14 @@
+"use client";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import React from "react";
+import React, { useState } from "react";
 import { CircleUser } from "lucide-react";
 import { SigninForm } from "../../forms/auth/SignInForm";
+import { Button } from "@/components/ui/button";
 
 const SignInDialog = () => {
   return (
