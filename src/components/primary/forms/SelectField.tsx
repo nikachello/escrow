@@ -27,6 +27,7 @@ interface SelectFieldProps<T extends FieldValues> {
   placeholder: string;
   options: Option[];
   control: Control<T>;
+  onChange?: (value: string) => void; // external onChange callback (optional)
 }
 
 const SelectField = <T extends FieldValues>({
@@ -35,6 +36,7 @@ const SelectField = <T extends FieldValues>({
   placeholder,
   options,
   control,
+  onChange,
 }: SelectFieldProps<T>) => {
   return (
     <FormField
@@ -47,6 +49,7 @@ const SelectField = <T extends FieldValues>({
             onValueChange={(value) => {
               field.onChange(value);
               field.onBlur();
+              if (onChange) onChange(value); // call external onChange if provided
             }}
             defaultValue={field.value}
           >
