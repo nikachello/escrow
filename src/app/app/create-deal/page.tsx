@@ -177,7 +177,7 @@ const DealCreatePage = () => {
                 name="itemDescription"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bio</FormLabel>
+                    <FormLabel>დამატებითი დეტალები</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="მოგვიყევით ნივთისა და გარიგების შესახებ"
@@ -190,7 +190,7 @@ const DealCreatePage = () => {
               />
 
               <Button type="submit" className="mt-4">
-                შექმნა
+                შემდეგი
               </Button>
             </form>
           </Form>

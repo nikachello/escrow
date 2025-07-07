@@ -40,21 +40,31 @@ const Navbar = ({ session }: Props) => {
           <div className="flex items-center gap-4">
             {session?.user ? (
               <div className="w-full">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="w-full" asChild>
-                    <Button variant="secondary">
-                      გამარჯობა, {session.user.firstName}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-60" align="center">
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem>პარამეტრები</DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleLogOut}>
-                        გასვლა
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <div className="flex flex-row items-center justify-between gap-5">
+                  <Button
+                    onClick={() => {
+                      router.push("/app/create-deal");
+                    }}
+                    variant="default"
+                  >
+                    გარიგების შექმნა
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="secondary">
+                        გამარჯობა, {session.user.firstName}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-60" align="center">
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>პარამეტრები</DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogOut}>
+                          გასვლა
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
             ) : (
               <>
