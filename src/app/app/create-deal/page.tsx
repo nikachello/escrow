@@ -14,19 +14,19 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
+import DealDetailsForm from "@/components/primary/forms/create-deal/DealDetailsForm";
+import ItemForm from "@/components/primary/forms/create-deal/ItemForm";
+import ItemsList from "@/components/primary/forms/create-deal/ItemList";
+import { DEAL_CATEGORIES } from "@/lib/constants";
+import DealTotal from "@/components/primary/forms/create-deal/DealTotal";
 import {
   DealFormData,
   dealSchema,
   itemSchema,
   ItemType,
   Payer,
-} from "@/types/create-deal/types";
+} from "@/lib/types/create-deal";
 import { CURRENCIES } from "@/lib/constants/create-deal";
-import DealDetailsForm from "@/components/primary/forms/create-deal/DealDetailsForm";
-import ItemForm from "@/components/primary/forms/create-deal/ItemForm";
-import ItemsList from "@/components/primary/forms/create-deal/ItemList";
-import { DEAL_CATEGORIES } from "@/lib/constants";
-import DealTotal from "@/components/primary/forms/create-deal/DealTotal";
 
 type Totals = {
   totalItemsPrice: number;

@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/aceternity/input";
 import InputField from "@/components/primary/forms/InputField";
 import SelectField from "@/components/primary/forms/SelectField";
-import { Currency, DealFormData } from "@/types/create-deal/types";
+import { Currency, DealFormData } from "@/lib/types/create-deal";
 
 interface DealDetailsFormProps {
   control: Control<DealFormData>;
