@@ -33,7 +33,7 @@ const ItemsList: React.FC<ItemsListProps> = ({
           დამატებული ნივთები
         </h3>
         <span className="text-sm text-gray-500 dark:text-gray-400">
-          სულ: {items.length} ნივთი
+          სულ: {items.length} ნივთი/სერვისი
         </span>
       </div>
 
@@ -78,7 +78,7 @@ const ItemsList: React.FC<ItemsListProps> = ({
                     <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       დეტალები:
                     </span>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 break-words">
                       {item.itemDescription}
                     </p>
                   </div>

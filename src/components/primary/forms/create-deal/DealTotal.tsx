@@ -2,8 +2,6 @@ import { CURRENCIES } from "@/lib/constants/create-deal";
 import { DealFormData, ItemType } from "@/types/create-deal/types";
 import React from "react";
 
-type Payer = "seller" | "buyer";
-
 type Totals = {
   totalItemsPrice: number;
   totalPay: number;
@@ -31,7 +29,11 @@ const DealTotal = ({ dealData, totals }: Props) => {
       <h3 className="text-xl font-heading font-semibold mb-2">შეჯამება</h3>
       <p>
         <strong>სერვისის თანხას იხდის:</strong>{" "}
-        {dealData.payer === "buyer" ? "მყიდველი" : "გამყიდველი"}
+        {dealData.payer === "buyer"
+          ? "მყიდველი"
+          : dealData.payer === "seller"
+            ? "გამყიდველი"
+            : "ნახევარ-ნახევარი"}
       </p>
       <div className="space-y-4">
         <p>
@@ -39,6 +41,8 @@ const DealTotal = ({ dealData, totals }: Props) => {
           {currencyName}
         </p>
         <p>
+          <strong>სერვისის ღირებულება:</strong>{" "}
+          {formatPrice(totalItemsPrice * 0.05)} {currencyName} <br />
           <strong>თქვენი გადასახდელი თანხა:</strong> {formatPrice(totalPay)}{" "}
           {currencyName}
           <br />

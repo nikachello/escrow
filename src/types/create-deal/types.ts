@@ -15,7 +15,7 @@ export interface Category {
   name_ka: string;
 }
 
-export type Payer = "seller" | "buyer";
+export type Payer = "seller" | "buyer" | "equal";
 
 export const dealSchema = z.object({
   dealName: z
@@ -24,7 +24,7 @@ export const dealSchema = z.object({
     .max(20, "მაქსიმუმ 20 სიმბოლო"),
   inspectionDays: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
   currency: z.string().nonempty("აირჩიეთ ვალუტა"),
-  payer: z.enum(["seller", "buyer"]),
+  payer: z.enum(["seller", "buyer", "equal"]),
   shipping_days: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
 });
 

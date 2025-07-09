@@ -70,6 +70,7 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
           options={[
             { id: "seller", name_ka: "გამყიდველი", name_en: "Buyer" },
             { id: "buyer", name_ka: "მყიდველი", name_en: "Seller" },
+            { id: "equal", name_ka: "თანაბრად", name_en: "Half/half" },
           ]}
           placeholder="ვინ იხდის?"
           label="ვინ იხდის მომსახურების თანხას?"

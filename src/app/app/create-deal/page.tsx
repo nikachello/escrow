@@ -19,6 +19,7 @@ import {
   dealSchema,
   itemSchema,
   ItemType,
+  Payer,
 } from "@/types/create-deal/types";
 import { CURRENCIES } from "@/lib/constants/create-deal";
 import DealDetailsForm from "@/components/primary/forms/create-deal/DealDetailsForm";
@@ -35,19 +36,36 @@ type Totals = {
 
 const roundToTwo = (num: number) => Math.round(num * 100) / 100;
 
-const calculateTotals = (items: ItemType[], dealData: DealFormData): Totals => {
+const calculateTotals = (
+  items: ItemType[],
+  dealData: DealFormData & { payer: Payer }
+) => {
   const totalItemsPrice = items.reduce((sum, item) => sum + item.price, 0);
   const payer = dealData.payer;
 
-  const totalPay =
-    payer === "buyer"
-      ? roundToTwo(totalItemsPrice + totalItemsPrice * 0.05)
-      : roundToTwo(totalItemsPrice);
+  let totalPay: number;
+  let totalReceivable: number;
 
-  const totalReceivable =
-    payer === "seller"
-      ? roundToTwo(totalItemsPrice - totalItemsPrice * 0.05)
-      : roundToTwo(totalItemsPrice);
+  if (payer === "buyer") {
+    // Buyer pays full 5%
+    totalPay = roundToTwo(totalItemsPrice + totalItemsPrice * 0.05);
+    totalReceivable = roundToTwo(totalItemsPrice);
+  } else if (payer === "seller") {
+    // Seller pays full 5%
+    totalPay = roundToTwo(totalItemsPrice + totalItemsPrice * 0.05);
+    totalReceivable = roundToTwo(totalItemsPrice);
+  } else if (payer === "equal") {
+    // Split 5% fee half-half: each pays 2.5%
+    const halfFeeRate = 0.025; // 2.5%
+    totalPay = roundToTwo(totalItemsPrice + totalItemsPrice * halfFeeRate); // payer pays half fee
+    totalReceivable = roundToTwo(
+      totalItemsPrice - totalItemsPrice * halfFeeRate
+    ); // other party receives less by half fee
+  } else {
+    // Default fallback: no fee
+    totalPay = roundToTwo(totalItemsPrice);
+    totalReceivable = roundToTwo(totalItemsPrice);
+  }
 
   return { totalItemsPrice, totalPay, totalReceivable };
 };
