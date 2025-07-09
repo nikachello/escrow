@@ -1,5 +1,5 @@
 import { CURRENCIES } from "@/lib/constants/create-deal";
-import { DealFormData, ItemType } from "@/types/create-deal/types";
+import { DealFormData, ItemType } from "@/lib/types/create-deal";
 import React from "react";
 
 type Totals = {

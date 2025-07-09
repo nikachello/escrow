@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/aceternity/input";
 import { authClient } from "@/lib/auth/auth-client";
-import { signUpSchema } from "@/lib/auth/validations";
+import { signUpSchema } from "@/lib/types/auth";
 
 type FormData = z.infer<typeof signUpSchema>;
 

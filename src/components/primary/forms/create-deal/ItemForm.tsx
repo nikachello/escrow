@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/primary/forms/InputField";
 import SelectField from "@/components/primary/forms/SelectField";
-import { Category, ItemType } from "@/types/create-deal/types";
+import { Category, ItemType } from "@/lib/types/create-deal";
 
 interface ItemFormProps {
   form: UseFormReturn<ItemType>;
