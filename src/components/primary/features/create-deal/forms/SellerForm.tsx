@@ -1,7 +1,7 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import InputField from "@/components/primary/forms/InputField";
-import { Currency, dealSellerData } from "@/lib/types/create-deal";
+import { dealSellerData } from "@/lib/types/create-deal";
 
 interface SellerInfoFormProps {
   control: Control<dealSellerData>;

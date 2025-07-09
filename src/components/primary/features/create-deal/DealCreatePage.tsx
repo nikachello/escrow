@@ -12,11 +12,9 @@ import { Separator } from "@/components/ui/separator";
 import { Form } from "@/components/ui/form";
 
 // Feature components
-import DealDetailsForm from "@/components/primary/forms/create-deal/DealDetailsForm";
-import ItemForm from "@/components/primary/forms/create-deal/ItemForm";
-import ItemsList from "@/components/primary/forms/create-deal/ItemList";
-import DealTotal from "@/components/primary/forms/create-deal/DealTotal";
-import SellerInfoForm from "@/components/primary/forms/create-deal/SellerForm";
+import DealDetailsForm from "@/components/primary/features/create-deal/forms/DealDetailsForm";
+import ItemForm from "@/components/primary/features/create-deal/forms/ItemForm";
+import DealTotal from "@/components/primary/features/create-deal/components/DealTotal";
 import LoadSpinner from "../../loadSpinner";
 import { FORM_MESSAGES } from "@/lib/constants/form-messages";
 import { useDealCreate } from "./hooks/useDealCreate";
@@ -25,6 +23,8 @@ import FormDisabledNotice from "../../forms/formDisabledNotice";
 import FormSection from "./components/FormSection";
 import { DEAL_CATEGORIES } from "@/lib/constants";
 import SubmitButton from "./components/SubmitButton";
+import ItemsList from "./components/ItemList";
+import SellerInfoForm from "./forms/SellerForm";
 
 // UI components
 

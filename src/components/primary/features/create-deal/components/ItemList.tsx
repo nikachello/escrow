@@ -3,8 +3,8 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
-import { ItemType } from "@/types/create-deal/types";
 import { DEAL_CATEGORIES } from "@/lib/constants";
+import { ItemType } from "@/lib/types/create-deal";
 
 interface ItemsListProps {
   items: ItemType[];

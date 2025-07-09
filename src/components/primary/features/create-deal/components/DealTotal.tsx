@@ -37,7 +37,7 @@ const DealTotal = ({ dealData, totals }: Props) => {
       </p>
       <div className="space-y-4">
         <p>
-          <strong>გარიგების ღირებულება:</strong> {formatPrice(totalItemsPrice)}{" "}
+          <strong>გარიგების ღირებულებაა:</strong> {formatPrice(totalItemsPrice)}{" "}
           {currencyName}
         </p>
         <p>

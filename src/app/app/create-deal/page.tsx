@@ -1,3 +1,13 @@
+import { DealCreatePage } from "@/components/primary/features/create-deal";
+
+import React from "react";
+
+const page = () => {
+  return <DealCreatePage />;
+};
+
+export default page;
+
 // "use client";
 
 // import React, { useState, useEffect, useCallback } from "react";
@@ -243,15 +253,3 @@
 // };
 
 // export default DealCreatePage;
-
-import { DealCreatePage } from "@/components/primary/features/deal-create";
-
-import React from "react";
-
-type Props = {};
-
-const page = (props: Props) => {
-  return <DealCreatePage />;
-};
-
-export default page;

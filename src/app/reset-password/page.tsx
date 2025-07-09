@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/aceternity/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth/auth-client";
-import { resetPasswordSchema } from "@/lib/auth/validations";
+import { resetPasswordSchema } from "@/lib/types/auth";
 
 const ResetPassword = () => {
   const router = useRouter();
@@ -64,7 +64,7 @@ const ResetPassword = () => {
           },
         }
       );
-    } catch (error) {
+    } catch {
       toast.error("ვერ მოხერხდა პაროლის აღდგენა");
     } finally {
       setLoading(false);

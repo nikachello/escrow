@@ -86,7 +86,7 @@ export const useDealCreate = () => {
         setSubmitting(false);
       }
     },
-    [items, currentUserEmail, sellerInfoForm, resetAllForms]
+    [items, currentUserEmail, sellerInfoForm, resetAllForms, dealForm]
   );
 
   return {

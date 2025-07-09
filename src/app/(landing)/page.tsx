@@ -3,7 +3,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import Navbar from "@/components/primary/navbar/Navbar";
 import RoundedContainer from "@/components/primary/containers/RoundedContainer";
 import Footer from "@/components/primary/footer/Footer";
 import AboutLanding from "@/components/primary/landing/landing-convert/AboutLanding";

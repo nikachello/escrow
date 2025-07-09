@@ -3,11 +3,11 @@
 import React from "react";
 import ContentContainer from "../containers/ContentContainer";
 import Logo from "./Logo";
-import { CircleUser, Hamburger, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import SignUpDialog from "../dialogs/auth/SignUpDialog";
 import SignInDialog from "../dialogs/auth/SignInDialog";
 import { SessionType } from "@/lib/types/session";
-import Link from "next/link";
+
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -1,6 +1,5 @@
 // constants.ts
-import { Currency } from "@/types/create-deal/types";
-import { z } from "zod";
+import { Currency } from "../types/create-deal";
 
 export const CURRENCIES: Currency[] = [
   { id: "lari", name_ka: "ლარი", symbol: "₾" },
