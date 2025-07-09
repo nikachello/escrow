@@ -1,3 +1,6 @@
+"use client"; // ← Add this at the top
+
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -11,8 +14,11 @@ const sizeMap = {
 };
 
 const Logo = ({ size = "sm" }: Props) => {
+  const router = useRouter();
+
   return (
     <div
+      onClick={() => router.push("/")}
       className={`cursor-pointer font-bold font-heading text-secondary ${sizeMap[size]}`}
     >
       Garanti.ge

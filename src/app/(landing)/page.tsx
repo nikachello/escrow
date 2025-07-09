@@ -3,7 +3,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-import Navbar from "@/components/primary/navbar/Navbar";
 import RoundedContainer from "@/components/primary/containers/RoundedContainer";
 import Footer from "@/components/primary/footer/Footer";
 import AboutLanding from "@/components/primary/landing/landing-convert/AboutLanding";
@@ -14,7 +13,7 @@ import Faq from "@/components/primary/landing/faq/Faq";
 
 export default function Home() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loadings...</div>}>
       <HomeContent />
     </Suspense>
   );
@@ -49,7 +48,7 @@ function HomeContent() {
         </div>
       )}
 
-      <Navbar />
+      {/* <Navbar /> */}
       <AboutLanding />
       <RoundedContainer>
         <HowItWorks />

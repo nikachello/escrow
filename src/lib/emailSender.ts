@@ -9,21 +9,33 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendVerificationEmail = async ({
+export const sendEmail = async ({
+  from,
   to,
-  url,
+  subject,
+  text,
+  html,
 }: {
+  from: string;
   to: string;
-  url: string;
+  subject: string;
+  text: string;
+  html: string;
 }) => {
   const mailOptions = {
-    from: `"Shuamavali no-reply@test.com`,
+    from,
     to,
-    subject: `აქტივაცია Shuamavali.ge-ზე`,
-    text: `დააჭირეთ ლინკს ემაილის გასააქტიურებლად: ${url}`,
-    html: `<p>დააჭირეთ <a href=${url}>აქ</a></p>`,
+    subject,
+    text,
+    html,
   };
 
-  const info = await transporter.sendMail(mailOptions);
-  console.log("Mailtrap sent: %s", info.messageId);
+  try {
+    const info = await transporter.sendMail(mailOptions);
+
+    console.log("Mailtrap sent: %s", info.messageId);
+  } catch (error) {
+    console.log("can't send an email", error);
+    return error;
+  }
 };
