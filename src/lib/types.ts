@@ -1,5 +1,5 @@
 export type DealCategory = {
-  id: number;
+  id: string;
   name_en: string;
   name_ka: string;
 };

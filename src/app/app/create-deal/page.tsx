@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -9,187 +9,188 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { toast } from "sonner";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
-import { Input } from "@/components/ui/aceternity/input";
-import SelectField from "@/components/primary/forms/SelectField";
-import InputField from "@/components/primary/forms/InputField";
+  DealFormData,
+  dealSchema,
+  itemSchema,
+  ItemType,
+} from "@/types/create-deal/types";
+import { CURRENCIES } from "@/lib/constants/create-deal";
+import DealDetailsForm from "@/components/primary/forms/create-deal/DealDetailsForm";
+import ItemForm from "@/components/primary/forms/create-deal/ItemForm";
+import ItemsList from "@/components/primary/forms/create-deal/ItemList";
 import { DEAL_CATEGORIES } from "@/lib/constants";
-import { Textarea } from "@/components/ui/textarea";
+import DealTotal from "@/components/primary/forms/create-deal/DealTotal";
 
-const CURRENCIES = [
-  { id: "lari", name_ka: "ლარი", symbol: "₾" },
-  { id: "usd", name_ka: "დოლარი", symbol: "$" },
-  { id: "rub", name_ka: "რუბლი", symbol: "₽" },
-];
+type Totals = {
+  totalItemsPrice: number;
+  totalPay: number;
+  totalReceivable: number;
+};
 
-const dealSchema = z.object({
-  dealName: z
-    .string()
-    .min(2, { message: "მინიმუმ 2 სიმბოლო" })
-    .max(20, { message: "მაქსიმუმ 20 სიმბოლო" }),
-  inspectionDays: z.number().min(1, { message: "უნდა იყოს მინიმუმ 1" }),
-  currency: z.string().nonempty({ message: "აირჩიეთ ვალუტა" }),
-  dealCategory: z.string().nonempty({ message: "აირჩიეთ კატეგორია" }),
-  itemName: z
-    .string()
-    .min(2, { message: "მინიმუმ 2 სიმბოლო" })
-    .max(50, "მაქსიმუმ 50 სიმბოლო"),
-  price: z.number().min(1, { message: "უნდა იყოს მინიმუმ 1" }),
-  itemDescription: z
-    .string()
-    .min(30, { message: "მინიმუმ 30 სიმბოლო" })
-    .max(1000, { message: "მაქსიმუმ 1000 სიმბოლო" }),
-});
+const roundToTwo = (num: number) => Math.round(num * 100) / 100;
 
-type DealFormData = z.infer<typeof dealSchema>;
+const calculateTotals = (items: ItemType[], dealData: DealFormData): Totals => {
+  const totalItemsPrice = items.reduce((sum, item) => sum + item.price, 0);
+  const payer = dealData.payer;
+
+  const totalPay =
+    payer === "buyer"
+      ? roundToTwo(totalItemsPrice + totalItemsPrice * 0.05)
+      : roundToTwo(totalItemsPrice);
+
+  const totalReceivable =
+    payer === "seller"
+      ? roundToTwo(totalItemsPrice - totalItemsPrice * 0.05)
+      : roundToTwo(totalItemsPrice);
+
+  return { totalItemsPrice, totalPay, totalReceivable };
+};
 
 const DealCreatePage = () => {
   const [currencySymbol, setCurrencySymbol] = useState("₾");
+  const [items, setItems] = useState<ItemType[]>([]);
 
-  const form = useForm<DealFormData>({
+  const dealForm = useForm<DealFormData>({
     resolver: zodResolver(dealSchema),
     defaultValues: {
       dealName: "",
       inspectionDays: 1,
       currency: "lari",
-      dealCategory: "",
+      payer: "buyer",
+      shipping_days: 1,
+    },
+  });
+
+  const itemForm = useForm<ItemType>({
+    resolver: zodResolver(itemSchema),
+    defaultValues: {
+      itemCategory: "",
       itemName: "",
-      price: 0,
+      price: 1,
       itemDescription: "",
     },
   });
 
-  const onCurrencyChange = (value: string) => {
-    const found = CURRENCIES.find((c) => c.id === value);
-    setCurrencySymbol(found?.symbol ?? "");
+  const formDisabled = items.length > 0;
+
+  // Update currency symbol when currency changes
+  useEffect(() => {
+    const subscription = dealForm.watch((value) => {
+      const currency = CURRENCIES.find((c) => c.id === value.currency);
+      setCurrencySymbol(currency?.symbol ?? "₾");
+    });
+    return () => subscription.unsubscribe();
+  }, [dealForm]);
+
+  const handleAddItem = async () => {
+    const isDealValid = await dealForm.trigger();
+    if (!isDealValid) {
+      toast.error("გთხოვთ შეავსოთ გარიგების დეტალები სრულად");
+      return;
+    }
+
+    const isItemValid = await itemForm.trigger();
+    if (!isItemValid) return;
+
+    const newItem = itemForm.getValues();
+    setItems((prev) => [...prev, newItem]);
+    itemForm.reset();
   };
 
-  const onSubmit = (values: DealFormData) => {
-    alert(JSON.stringify(values, null, 2));
-    // submit your deal data here
+  const handleRemoveItem = (index: number) => {
+    setItems((prev) => prev.filter((_, i) => i !== index));
   };
+
+  const handleSubmit = (values: DealFormData) => {
+    if (items.length === 0) {
+      toast.error("გთხოვთ დაამატოთ მინიმუმ ერთი ნივთი");
+      return;
+    }
+
+    const formData = { ...values, items };
+    const totals = calculateTotals(items, values);
+
+    // Combine form data with totals for API submission
+    const submissionData = { ...formData, totals };
+
+    console.log("Submitting deal:", submissionData);
+
+    // TODO: Send submissionData to API
+    alert(JSON.stringify(submissionData, null, 2));
+  };
+
+  // Calculate totals for current state
+  const totals = calculateTotals(items, dealForm.getValues());
 
   return (
-    <div>
-      <Card className="w-3/4 lg:w-1/2 m-auto mt-5">
-        <CardHeader className="font-heading">
-          <CardTitle className="text-2xl">შექმენით გარიგება</CardTitle>
+    <div className="container mx-auto p-4">
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-2xl font-heading">
+            შექმენით გარიგება
+          </CardTitle>
           <CardDescription>შეიყვანეთ ყველაფერი დეტალურად</CardDescription>
         </CardHeader>
+
         <CardContent>
-          <Separator className="mb-4" />
-
-          <Form {...form}>
+          <Form {...dealForm}>
             <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex gap-4 flex-col"
+              onSubmit={dealForm.handleSubmit(handleSubmit)}
+              className="space-y-6 mb-4"
             >
-              <InputField
-                control={form.control}
-                name="dealName"
-                label="გარიგების სახელი"
-                placeholder="გარიგება 1"
+              <DealDetailsForm
+                control={dealForm.control}
+                formDisabled={formDisabled}
+                currencies={CURRENCIES}
               />
-              <div className="w-full gap-4 flex flex-row justify-stretch items-center">
-                <FormField
-                  control={form.control}
-                  name="inspectionDays"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>შემოწმების დღეები</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          min={0}
-                          {...field}
-                          onChange={(e) =>
-                            field.onChange(e.target.valueAsNumber)
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
+
+              {formDisabled && (
+                <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    გარიგების დეტალების შეცვლა შეუძლებელია, რადგან
+                    ნივთები/სერვისები უკვე დამატებულია.
+                  </p>
+                </div>
+              )}
+
+              <Separator />
+
+              <div className="space-y-4">
+                <h2 className="text-2xl font-heading font-bold">ნივთები</h2>
+
+                <ItemForm
+                  form={itemForm}
+                  currencySymbol={currencySymbol}
+                  onAddItem={handleAddItem}
+                  categories={DEAL_CATEGORIES}
                 />
 
-                <SelectField
-                  name="currency"
-                  control={form.control}
-                  options={CURRENCIES}
-                  placeholder="აირჩიეთ ვალუტა"
-                  label="აირჩიეთ ვალუტა"
-                  onChange={onCurrencyChange}
+                <ItemsList
+                  items={items}
+                  currencySymbol={currencySymbol}
+                  onRemoveItem={handleRemoveItem}
                 />
               </div>
 
-              <SelectField
-                name="dealCategory"
-                control={form.control}
-                options={DEAL_CATEGORIES}
-                placeholder="აირჩიეთ კატეგორია"
-                label="აირჩიეთ კატეგორია"
-              />
-
-              <div className="w-full gap-4 flex flex-row justify-stretch items-center">
-                <InputField
-                  control={form.control}
-                  name="itemName"
-                  label="ნივთის დასახელება"
-                  placeholder="ლურჯი მოსაცმელი"
+              {formDisabled && (
+                <DealTotal
+                  items={items}
+                  dealData={dealForm.getValues()}
+                  totals={totals}
                 />
+              )}
 
-                <FormField
-                  control={form.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>ფასი {currencySymbol}</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          min={1}
-                          onChange={(e) =>
-                            field.onChange(e.target.valueAsNumber)
-                          }
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name="itemDescription"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>დამატებითი დეტალები</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="მოგვიყევით ნივთისა და გარიგების შესახებ"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button type="submit" className="mt-4">
+              <Button
+                type="submit"
+                className="w-full mt-6"
+                disabled={items.length === 0}
+              >
                 შემდეგი
               </Button>
             </form>

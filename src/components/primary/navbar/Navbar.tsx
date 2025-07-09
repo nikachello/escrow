@@ -3,7 +3,7 @@
 import React from "react";
 import ContentContainer from "../containers/ContentContainer";
 import Logo from "./Logo";
-import { CircleUser } from "lucide-react";
+import { CircleUser, Hamburger, MenuIcon } from "lucide-react";
 import SignUpDialog from "../dialogs/auth/SignUpDialog";
 import SignInDialog from "../dialogs/auth/SignInDialog";
 import { SessionType } from "@/types/session";
@@ -45,14 +45,15 @@ const Navbar = ({ session }: Props) => {
                     onClick={() => {
                       router.push("/app/create-deal");
                     }}
-                    variant="default"
+                    variant="secondary"
+                    className="cursor-pointer"
                   >
                     გარიგების შექმნა
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="secondary">
-                        გამარჯობა, {session.user.firstName}
+                        გამარჯობა, {session.user.firstName} <MenuIcon />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-60" align="center">

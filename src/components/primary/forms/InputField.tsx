@@ -14,6 +14,7 @@ interface SelectFieldProps<T extends FieldValues> {
   label: string;
   placeholder: string;
   control: Control<T>;
+  disabled?: boolean;
 }
 
 const InputField = <T extends FieldValues>({
@@ -21,6 +22,7 @@ const InputField = <T extends FieldValues>({
   label,
   placeholder,
   control,
+  disabled,
 }: SelectFieldProps<T>) => {
   return (
     <FormField
@@ -31,7 +33,12 @@ const InputField = <T extends FieldValues>({
           <FormLabel>{label}</FormLabel>
 
           <FormControl>
-            <Input type="text" placeholder={placeholder} {...field} />
+            <Input
+              type="text"
+              placeholder={placeholder}
+              {...field}
+              disabled={disabled}
+            />
           </FormControl>
 
           <FormMessage />
