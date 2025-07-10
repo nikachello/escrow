@@ -26,7 +26,7 @@ export const dealSchema = z.object({
   inspectionDays: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
   currency: z.string().nonempty("აირჩიეთ ვალუტა"),
   payer: z.enum(["seller", "buyer", "equal"]),
-  shipping_days: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
+  shippingDays: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
 });
 
 export const itemSchema = z.object({

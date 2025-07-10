@@ -79,7 +79,7 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
 
         <FormField
           control={control}
-          name="shipping_days"
+          name="shippingDays"
           render={({ field }) => (
             <FormItem>
               <FormLabel>ტრანსპორტირების დღეები</FormLabel>

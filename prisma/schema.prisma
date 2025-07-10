@@ -73,3 +73,82 @@ model Verification {
 
   @@map("verification")
 }
+
+
+model Deal {
+  id             String   @id @default(uuid())
+  buyerEmail     String
+  sellerEmail    String
+  amount         Float
+  currency       String    @default("lari")
+  name         String
+
+  sellerReceivable Float
+  buyerPay Float
+  whoPays WhoPays
+
+  shippingDays   Int?      // for physical
+  inspectionDays Int
+
+  status         DealStatus @default(pending)
+
+  createdAt      DateTime @default(now())
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+  completedAt    DateTime?
+
+  // Relations
+  Dispute        Dispute?
+  items          Item[] 
+  invitedUser      InvitedUser?
+}
+
+model Item {
+  id          String   @id @default(uuid())
+  dealId      String
+  name        String
+  description String?
+  price       Float
+  category String
+
+  deal        Deal     @relation(fields: [dealId], references: [id])
+}
+
+
+model InvitedUser {
+  id               String   @id @default(uuid())
+  email            String   @unique
+  invitedAt        DateTime @default(now())
+  createdAccountAt DateTime?
+
+  dealId           String   @unique  
+  deal             Deal     @relation(fields: [dealId], references: [id])
+}
+
+enum DealStatus {
+  pending
+  shipped
+  delivered
+  completed
+  disputed
+}
+
+enum DealType {
+  physical
+  digital
+}
+
+enum WhoPays {
+  buyer
+  seller
+  equal
+}
+
+model Dispute {
+  id        String   @id @default(uuid())
+  dealId    String   @unique
+  reason    String
+  createdAt DateTime @default(now())
+
+  Deal Deal @relation(fields: [dealId], references: [id])
+}
