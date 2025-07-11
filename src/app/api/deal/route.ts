@@ -1,3 +1,4 @@
+import { sendEmail } from "@/lib/emailSender";
 import { prisma } from "@/lib/prisma";
 import { DealSubmissionData } from "@/lib/services/deal-api";
 import { NextResponse } from "next/server";
@@ -52,6 +53,64 @@ export async function POST(req: Request) {
         },
       },
     });
+
+    await sendEmail({
+      from: "Shuamavali <no-reply@shuamavali.com>",
+      to: newDeal.buyerEmail,
+      subject: `თქვენთვის შექმენით გარიგება - ${newDeal.name}`,
+      text: "თქვენ შექმენით გარიგება, გთხოვთ ეწვიოთ ბმულს.",
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+          <h2>გამარჯობა,</h2>
+          <p>თქვენ შექმენით გარიგება პლატფორმა Shuamavali.ge-ზე.</p>
+          <p>
+            დეტალების სანახავად ეწვიეთ შემდეგ ბმულს:
+            <a href="https://shuamavali.com/deal/${newDeal.id}" style="color: #4A90E2;">იხილეთ გარიგება</a>
+          </p>
+          <hr />
+          <small>ეს წერილი გამოგზავნილია ავტომატურად. გთხოვთ, არ უპასუხოთ.</small>
+        </div>
+      `,
+    });
+
+    const existingUser = await prisma.user.findUnique({
+      where: { email: seller.email },
+    });
+
+    if (!existingUser) {
+      try {
+        const invitedUser = await prisma.invitedUser.create({
+          data: {
+            email: seller.email,
+            deal: {
+              connect: { id: newDeal.id },
+            },
+          },
+        });
+        await sendEmail({
+          from: "Shuamavali <no-reply@shuamavali.com>",
+          to: invitedUser.email,
+          subject: `თქვენთვის შეიქმნა გარიგება - ${newDeal.name}`,
+          text: "თქვენთვის შეიქმნა გარიგება, გთხოვთ ეწვიოთ ბმულს.",
+          html: `
+            <div style="font-family: Arial, sans-serif; color: #333;">
+              <h2>გამარჯობა,</h2>
+              <p>თქვენთვის შეიქმნა გარიგება პლატფორმა Shuamavali.ge-ზე.</p>
+              <p>
+                დეტალების სანახავად ეწვიეთ შემდეგ ბმულს:
+                <a href="https://shuamavali.com/deal/${newDeal.id}" style="color: #4A90E2;">იხილეთ გარიგება</a>
+              </p>
+              <hr />
+              <small>ეს წერილი გამოგზავნილია ავტომატურად. გთხოვთ, არ უპასუხოთ.</small>
+            </div>
+          `,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      //
+    }
 
     return NextResponse.json(newDeal, { status: 201 });
   } catch (error) {

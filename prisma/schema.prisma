@@ -117,7 +117,7 @@ model Item {
 
 model InvitedUser {
   id               String   @id @default(uuid())
-  email            String   @unique
+  email            String   
   invitedAt        DateTime @default(now())
   createdAccountAt DateTime?
 
