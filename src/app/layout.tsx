@@ -31,7 +31,9 @@ export default async function RootLayout({
   });
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} tracking-wide`}
+      >
         <Navbar session={session || null} />
         {children}
         <Toaster />
