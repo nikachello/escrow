@@ -90,7 +90,7 @@ model Deal {
   shippingDays   Int?      // for physical
   inspectionDays Int
 
-  status         DealStatus @default(pending)
+  status         DEAL_STATUS @default(pending)
 
   createdAt      DateTime @default(now())
   shippedAt      DateTime?
@@ -125,10 +125,14 @@ model InvitedUser {
   deal             Deal     @relation(fields: [dealId], references: [id])
 }
 
-enum DealStatus {
+enum DEAL_STATUS {
+  cancelled
   pending
+  agreed
+  paid
   shipped
   delivered
+  ispectionStarted
   completed
   disputed
 }

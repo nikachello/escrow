@@ -12,6 +12,64 @@ import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { DealStatus, DealStatusConfig, UserRole } from "@/lib/types/deal";
+import { dealStatusConfig } from "@/lib/config/deal";
+
+export const actionHandlers = {
+  agree: agreeToDeal,
+  cancel: cancelDeal,
+  pay: payForDeal,
+  ship: shipDeal,
+  confirm_delivery: confirmDelivery,
+  complete: completeDeal,
+  dispute: disputeDeal,
+};
+
+// Helper function to get current config
+export function getDealConfig(
+  status: DealStatus,
+  role: UserRole
+): DealStatusConfig {
+  return dealStatusConfig[status][role];
+}
+
+// Your existing server actions stay the same
+export async function agreeToDeal(dealId: string) {
+  "use server";
+  // ... your existing implementation
+}
+
+export async function cancelDeal(dealId: string) {
+  "use server";
+  // ... your existing implementation
+}
+
+// Add other action handlers as needed
+export async function payForDeal(dealId: string) {
+  "use server";
+  // Implementation for payment
+}
+
+async function shipDeal(dealId: string) {
+  "use server";
+  // Implementation for shipping
+}
+
+async function confirmDelivery(dealId: string) {
+  "use server";
+  // Implementation for delivery confirmation
+}
+
+async function completeDeal(dealId: string) {
+  "use server";
+  // Implementation for completion
+}
+
+async function disputeDeal(dealId: string) {
+  "use server";
+  // Implementation for dispute
+}
 
 export default async function DealPage({
   params,
@@ -22,7 +80,6 @@ export default async function DealPage({
     headers: await headers(),
   });
 
-  // gavigot user shemosulia tu ara, users akvs tu ara maili verificerebuli
   if (!session || !session.user.email || !session.user.emailVerified) {
     return redirect("/?mail-not-verified");
   }
@@ -46,14 +103,15 @@ export default async function DealPage({
   const buyerEmail = normalizeEmail(deal.buyerEmail);
   const sellerEmail = normalizeEmail(deal.sellerEmail);
 
-  console.log({ userEmail, buyerEmail, sellerEmail }); // Debug output
-
   if (userEmail !== buyerEmail && userEmail !== sellerEmail) {
-    console.log("Unauthorized: ", { userEmail, buyerEmail, sellerEmail });
     return redirect("/?error=not-authorized");
   }
 
-  const role = userEmail === buyerEmail ? "buyer" : "seller";
+  const role: UserRole = userEmail === buyerEmail ? "buyer" : "seller";
+  const status = deal.status as DealStatus;
+
+  // Get configuration for current status and role
+  const config = getDealConfig(status, role);
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">
@@ -75,37 +133,40 @@ export default async function DealPage({
         </CardHeader>
         <CardContent className="px-4 sm:px-6">
           <div className="w-full">
-            <EscrowTimeline currentStatus="agreement" />
-            <Badge variant="secondary" className="px-2 py-1 text-gray-500">
-              ● სჭირდება დათანხმება
-            </Badge>
-          </div>
-          <div className="border rounded-md p-4 mt-6">
-            {role === "buyer" ? (
-              <div>
-                <h2 className="font-heading font-bold text-lg">
-                  ველოდებით გამყიდველის თანხმობას
-                </h2>
-                <p className="text-sm tracking-wide">
-                  მას შემდეგ რაც გამყიდველი გადახედავს გარიგებას, მას შეუძლია
-                  დაეთანხმოს ან გააუქმოს ის. გადაწყვეტილებას ელ-ფოსტაზე მიიღებთ
-                </p>
-              </div>
-            ) : (
-              <div>
-                <h2 className="font-heading font-bold text-lg">
-                  განიხილეთ და დაეთანხმეთ გარიგებას
-                </h2>
-                <p className="text-sm tracking-wide">
-                  მყიდველმა შექმნა გარიგება, გთხოვთ გადაავლეთ თვალი და
-                  დაეთანხმეთ მას
-                </p>
-                <div className="mt-4 flex gap-8">
-                  <Button variant="default">დათანხმება</Button>
-                  <Button variant="destructive">გარიგების გაუქმება</Button>
-                </div>
-              </div>
+            <EscrowTimeline currentStatus={config.timelineStatus} />
+
+            {config.badge && (
+              <Badge
+                variant={config.badge.variant}
+                className="px-2 py-1 text-gray-500"
+              >
+                {config.badge.text}
+              </Badge>
             )}
+          </div>
+
+          <div className="border rounded-md p-4 mt-6">
+            <div>
+              <h2 className="font-heading font-bold text-lg">{config.title}</h2>
+              <p className="text-sm tracking-wide">{config.description}</p>
+
+              {config.actions && config.actions.length > 0 && (
+                <div className="mt-4 flex gap-4">
+                  {config.actions.map((action, index) => (
+                    <form
+                      key={index}
+                      action={actionHandlers[
+                        action.action as keyof typeof actionHandlers
+                      ]?.bind(null, deal.id)}
+                    >
+                      <Button type="submit" variant={action.variant}>
+                        {action.label}
+                      </Button>
+                    </form>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>

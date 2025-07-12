@@ -17,7 +17,7 @@ export const useDealForms = () => {
       inspectionDays: 1,
       currency: "lari",
       payer: "buyer",
-      shipping_days: 1,
+      shippingDays: 1,
     },
   });
 
