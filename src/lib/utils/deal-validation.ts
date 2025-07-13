@@ -53,8 +53,11 @@ export const validateAllForSubmission = async (
   sellerInfoForm: UseFormReturn<dealSellerData>,
   itemsCount: number,
   sellerEmail: string,
-  currentUserEmail: string | null
+  currentUserEmail: string | null,
+  totals: object
 ): Promise<boolean> => {
+  console.log(dealForm);
+  console.log(totals);
   // Check if items exist
   if (!validateItemsExist(itemsCount)) {
     return false;

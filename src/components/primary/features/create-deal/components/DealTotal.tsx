@@ -22,7 +22,7 @@ const DealTotal = ({ dealData, totals }: Props) => {
   )?.name_ka;
 
   // Format number to string with 2 decimals
-  const formatPrice = (num: number) => num.toFixed(2);
+  const formatPrice = (num: number) => Number(num);
 
   return (
     <div className="p-4 bg-gray-50 rounded-md">

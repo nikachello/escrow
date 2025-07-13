@@ -23,7 +23,7 @@ export const useItems = () => {
   }, []);
 
   const getItemsTotal = useCallback(() => {
-    return items.reduce((total, item) => total + item.price, 0);
+    return items.reduce((total, item) => Number(total) + Number(item.price), 0);
   }, [items]);
 
   return {

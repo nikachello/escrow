@@ -1,5 +1,10 @@
 import { DealFormData, ItemType } from "@/lib/types/create-deal";
-import { calculateTotals } from "@/lib/utils/calculateTotals";
+
+export interface DealTotals {
+  totalItemsPrice: number;
+  totalPay: number;
+  totalReceivable: number;
+}
 
 export interface DealSubmissionData {
   deal: DealFormData;
@@ -7,25 +12,23 @@ export interface DealSubmissionData {
   seller: {
     email: string;
   };
-  totals: {
-    totalItemsPrice: number;
-    totalPay: number;
-    totalReceivable: number;
-  };
+  totals: DealTotals;
+  currentUserEmail: string | null;
 }
 
 export const prepareSubmissionData = (
   dealData: DealFormData,
   items: ItemType[],
-  sellerData: { email: string }
+  sellerData: { email: string },
+  currentUserEmail: string | null,
+  totals: DealTotals
 ): DealSubmissionData => {
-  const totals = calculateTotals(items, dealData);
-
   return {
     deal: dealData,
     items,
     seller: sellerData,
     totals,
+    currentUserEmail,
   };
 };
 
@@ -36,28 +39,21 @@ export const submitDeal = async (
   console.log("Submitting deal:", submissionData);
 
   // Simulate API call delay
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  // Simulate potential API errors (for testing)
-  if (Math.random() < 0.1) {
-    // 10% chance of error
-    throw new Error("API Error: Failed to submit deal");
-  }
 
   // In a real implementation, this would be:
-  // const response = await fetch('/api/deals', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(submissionData),
-  // });
-  //
-  // if (!response.ok) {
-  //   throw new Error(`HTTP error! status: ${response.status}`);
-  // }
-  //
-  // return await response.json();
+  const response = await fetch("/api/deal", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(submissionData),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
 };
 
 export const saveDealDraft = async (

@@ -15,7 +15,7 @@ export const useCurrentUser = () => {
           setCurrentUserEmail(email);
         }
       } catch (error) {
-        console.error("Error fetching current user:", error);
+        console.error("მომხმარებელი არ მოიძებნა:", error);
         if (isMounted) {
           setCurrentUserEmail(null);
         }

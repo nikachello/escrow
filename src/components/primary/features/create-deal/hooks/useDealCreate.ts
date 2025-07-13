@@ -66,7 +66,8 @@ export const useDealCreate = () => {
         sellerInfoForm,
         items.length,
         sellerData.email,
-        currentUserEmail
+        currentUserEmail,
+        totals
       );
 
       if (!isValid) return;
@@ -74,7 +75,13 @@ export const useDealCreate = () => {
       setSubmitting(true);
 
       try {
-        const submissionData = prepareSubmissionData(values, items, sellerData);
+        const submissionData = prepareSubmissionData(
+          values,
+          items,
+          sellerData,
+          currentUserEmail,
+          totals
+        );
         await submitDeal(submissionData);
 
         toast.success(FORM_MESSAGES.SUBMISSION_SUCCESS);
@@ -103,6 +110,8 @@ export const useDealCreate = () => {
       dealForm,
       itemForm,
       sellerInfoForm,
+      totals,
+      currentUserEmail,
     },
 
     // Data

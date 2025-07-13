@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContentContainer from "../containers/ContentContainer";
 import Logo from "./Logo";
 import { MenuIcon } from "lucide-react";
 import SignUpDialog from "../dialogs/auth/SignUpDialog";
 import SignInDialog from "../dialogs/auth/SignInDialog";
 import { SessionType } from "@/lib/types/session";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +24,16 @@ type Props = {
 
 const Navbar = ({ session }: Props) => {
   const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+
+  // ✅ Scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLogOut = async () => {
     await authClient.signOut();
@@ -32,9 +41,15 @@ const Navbar = ({ session }: Props) => {
   };
 
   return (
-    <div className="bg-primary w-full shadow-sm">
+    <div
+      className={`w-full z-50 fixed top-0 transition-all duration-300${
+        scrolled
+          ? "bg-primary shadow-md backdrop-blur-md py-4"
+          : "bg-transparent py-4"
+      }`}
+    >
       <ContentContainer>
-        <div className="flex justify-between items-center text-secondary py-4">
+        <div className="flex justify-between items-center text-secondary transition-all duration-300">
           <Logo size="md" />
 
           <div className="flex items-center gap-4">
@@ -50,17 +65,26 @@ const Navbar = ({ session }: Props) => {
                   >
                     გარიგების შექმნა
                   </Button>
+
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="secondary">
-                        გამარჯობა, {session.user.firstName} <MenuIcon />
+                      <Button
+                        variant="secondary"
+                        className="flex items-center gap-2"
+                      >
+                        <span className="hidden md:inline">
+                          გამარჯობა, {session.user.firstName}
+                        </span>
+                        <MenuIcon />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-60" align="center">
                       <DropdownMenuGroup>
-                        <DropdownMenuItem>პარამეტრები</DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <span>პარამეტრები</span>
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={handleLogOut}>
-                          გასვლა
+                          <span>გასვლა</span>
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
