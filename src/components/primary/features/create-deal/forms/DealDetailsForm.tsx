@@ -42,13 +42,7 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
             <FormItem>
               <FormLabel>შემოწმების დღეები</FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  min={1}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                  disabled={formDisabled}
-                />
+                <Input {...field} disabled={formDisabled} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -84,13 +78,7 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
             <FormItem>
               <FormLabel>ტრანსპორტირების დღეები</FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  min={1}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                  disabled={formDisabled}
-                />
+                <Input {...field} disabled={formDisabled} />
               </FormControl>
               <FormMessage />
             </FormItem>

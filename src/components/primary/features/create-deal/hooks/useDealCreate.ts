@@ -110,6 +110,8 @@ export const useDealCreate = () => {
       dealForm,
       itemForm,
       sellerInfoForm,
+      totals,
+      currentUserEmail,
     },
 
     // Data

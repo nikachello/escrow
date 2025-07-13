@@ -12,27 +12,30 @@ import {
 export const useDealForms = () => {
   const dealForm = useForm<DealFormData>({
     resolver: zodResolver(dealSchema),
+    mode: "onChange",
     defaultValues: {
       dealName: "",
-      inspectionDays: 1,
+      inspectionDays: "",
       currency: "lari",
       payer: "buyer",
-      shippingDays: 1,
+      shippingDays: "",
     },
   });
 
   const itemForm = useForm<ItemType>({
     resolver: zodResolver(itemSchema),
+    mode: "onChange",
     defaultValues: {
-      itemCategory: "",
+      itemCategory: "1",
       itemName: "",
-      price: 1,
+      price: "",
       itemDescription: "",
     },
   });
 
   const sellerInfoForm = useForm<dealSellerData>({
     resolver: zodResolver(dealSellerSchema),
+    mode: "onChange",
     defaultValues: {
       email: "",
     },
