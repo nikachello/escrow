@@ -14,10 +14,10 @@ export const signUpSchema = z
       message: "შეიყვანეთ ელ-ფოსტა",
     }),
     phone: georgianMobilePhoneSchema,
-    password: z.string().min(6, {
-      message: "მინიმუმ 6 სიმბოლო",
+    password: z.string().min(8, {
+      message: "მინიმუმ 8 სიმბოლო",
     }),
-    repeatPassword: z.string().min(6, {
+    repeatPassword: z.string().min(8, {
       message: "გაიმეორეთ პაროლი სწორად",
     }),
   })
