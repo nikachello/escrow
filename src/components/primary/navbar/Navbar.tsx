@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ContentContainer from "../containers/ContentContainer";
 import Logo from "./Logo";
 import { MenuIcon } from "lucide-react";
@@ -24,16 +24,6 @@ type Props = {
 
 const Navbar = ({ session }: Props) => {
   const router = useRouter();
-  const [scrolled, setScrolled] = useState(false);
-
-  // ✅ Scroll listener
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleLogOut = async () => {
     await authClient.signOut();
@@ -41,15 +31,9 @@ const Navbar = ({ session }: Props) => {
   };
 
   return (
-    <div
-      className={`w-full z-50 fixed top-0 transition-all duration-300${
-        scrolled
-          ? "bg-primary shadow-md backdrop-blur-md py-4"
-          : "bg-transparent py-4"
-      }`}
-    >
+    <div className="bg-primary w-full shadow-sm">
       <ContentContainer>
-        <div className="flex justify-between items-center text-secondary transition-all duration-300">
+        <div className="flex justify-between items-center text-secondary py-4">
           <Logo size="md" />
 
           <div className="flex items-center gap-4">
@@ -81,10 +65,12 @@ const Navbar = ({ session }: Props) => {
                     <DropdownMenuContent className="w-60" align="center">
                       <DropdownMenuGroup>
                         <DropdownMenuItem>
-                          <span>პარამეტრები</span>
+                          <span className="hidden sm:inline">პარამეტრები</span>
+                          <span className="inline sm:hidden">⚙️</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={handleLogOut}>
-                          <span>გასვლა</span>
+                          <span className="hidden sm:inline">გასვლა</span>
+                          <span className="inline sm:hidden">🚪</span>
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
