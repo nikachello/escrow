@@ -1,6 +1,5 @@
 import { EscrowTimeline } from "@/components/primary/features/deal/components/EscrowTimeline";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,7 +12,8 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DealStatus, UserRole } from "@/lib/types/deal";
-import { getDealConfig } from "@/lib/actions/deal";
+import { ActionButton } from "@/components/primary/features/deal/components/ActionButton";
+import { getDealConfig } from "@/lib/utils/deal";
 
 type Props = {
   params: Promise<{ dealId: string }>;
@@ -100,16 +100,11 @@ export default async function DealPage({ params }: Props) {
               {config.actions && config.actions.length > 0 && (
                 <div className="mt-4 flex gap-4">
                   {config.actions.map((action, index) => (
-                    <form
+                    <ActionButton
                       key={index}
-                      // action={actionHandlers[
-                      //   action.action as keyof typeof actionHandlers
-                      // ]?.bind(null, deal.id)}
-                    >
-                      <Button type="submit" variant={action.variant}>
-                        {action.label}
-                      </Button>
-                    </form>
+                      action={action}
+                      dealId={deal.id}
+                    />
                   ))}
                 </div>
               )}

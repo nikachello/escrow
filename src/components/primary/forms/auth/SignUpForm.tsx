@@ -36,6 +36,7 @@ export function SignupForm() {
   });
 
   const onSubmit = async (values: FormData) => {
+    // WIP: Customize verify-result page
     const { nationalId, firstName, lastName, email, password, phone } = values;
     try {
       await authClient.signUp.email({
