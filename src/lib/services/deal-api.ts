@@ -1,4 +1,5 @@
 import { DealFormData, ItemType } from "@/lib/types/create-deal";
+import { Deal } from "@prisma/client";
 
 export interface DealTotals {
   totalItemsPrice: number;
@@ -34,7 +35,7 @@ export const prepareSubmissionData = (
 
 export const submitDeal = async (
   submissionData: DealSubmissionData
-): Promise<void> => {
+): Promise<Deal> => {
   // TODO: Replace with actual API call
   console.log("Submitting deal:", submissionData);
 
