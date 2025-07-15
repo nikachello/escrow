@@ -5,6 +5,7 @@ import Navbar from "@/components/primary/navbar/Navbar";
 import { headers } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/lib/auth/auth";
+import NextTopLoader from "nextjs-toploader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} tracking-wide`}
       >
+        <NextTopLoader />
         <Navbar session={session || null} />
         {children}
         <Toaster />

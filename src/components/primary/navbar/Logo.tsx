@@ -1,6 +1,6 @@
-"use client"; // ← Add this at the top
+"use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import React from "react";
 
 type Props = {
@@ -14,15 +14,13 @@ const sizeMap = {
 };
 
 const Logo = ({ size = "sm" }: Props) => {
-  const router = useRouter();
-
   return (
-    <div
-      onClick={() => router.push("/")}
+    <Link
+      href="/"
       className={`cursor-pointer font-bold font-heading text-secondary ${sizeMap[size]}`}
     >
       Garanti.ge
-    </div>
+    </Link>
   );
 };
 

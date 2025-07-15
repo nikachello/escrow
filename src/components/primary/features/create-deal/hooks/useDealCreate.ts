@@ -17,7 +17,7 @@ import {
 } from "@/lib/utils/deal-validation";
 import { FORM_MESSAGES } from "@/lib/constants/form-messages";
 import { prepareSubmissionData, submitDeal } from "@/lib/services/deal-api";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 export const useDealCreate = () => {
   const router = useRouter();

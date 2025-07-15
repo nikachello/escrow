@@ -16,15 +16,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth/auth-client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   session: SessionType | null;
 };
 
 const Navbar = ({ session }: Props) => {
-  const router = useRouter();
-
   const handleLogOut = async () => {
     await authClient.signOut();
     window.location.href = "/";
@@ -40,15 +38,11 @@ const Navbar = ({ session }: Props) => {
             {session?.user ? (
               <div className="w-full">
                 <div className="flex flex-row items-center justify-between gap-5">
-                  <Button
-                    onClick={() => {
-                      router.push("/app/create-deal");
-                    }}
-                    variant="secondary"
-                    className="cursor-pointer"
-                  >
-                    გარიგების შექმნა
-                  </Button>
+                  <Link href="/app/create-deal">
+                    <Button variant="secondary" className="cursor-pointer">
+                      გარიგების შექმნა
+                    </Button>
+                  </Link>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
