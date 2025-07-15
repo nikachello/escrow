@@ -7,7 +7,6 @@ import { MenuIcon } from "lucide-react";
 import SignUpDialog from "../dialogs/auth/SignUpDialog";
 import SignInDialog from "../dialogs/auth/SignInDialog";
 import { SessionType } from "@/lib/types/session";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,17 +49,28 @@ const Navbar = ({ session }: Props) => {
                   >
                     გარიგების შექმნა
                   </Button>
+
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="secondary">
-                        გამარჯობა, {session.user.firstName} <MenuIcon />
+                      <Button
+                        variant="secondary"
+                        className="flex items-center gap-2"
+                      >
+                        <span className="hidden md:inline">
+                          გამარჯობა, {session.user.firstName}
+                        </span>
+                        <MenuIcon />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-60" align="center">
                       <DropdownMenuGroup>
-                        <DropdownMenuItem>პარამეტრები</DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <span className="hidden sm:inline">პარამეტრები</span>
+                          <span className="inline sm:hidden">⚙️</span>
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={handleLogOut}>
-                          გასვლა
+                          <span className="hidden sm:inline">გასვლა</span>
+                          <span className="inline sm:hidden">🚪</span>
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>

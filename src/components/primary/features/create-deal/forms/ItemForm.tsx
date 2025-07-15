@@ -59,13 +59,7 @@ const ItemForm: React.FC<ItemFormProps> = ({
               <FormItem>
                 <FormLabel>ფასი {currencySymbol}</FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    min={1}
-                    step="0.01"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                  />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

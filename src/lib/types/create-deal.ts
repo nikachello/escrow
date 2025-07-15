@@ -18,15 +18,24 @@ export interface Category {
 
 export type Payer = "seller" | "buyer" | "equal";
 
+const positiveNumber = z
+  .string()
+  .refine((val) => /^\d+$/.test(val), {
+    message: "",
+  })
+  .refine((val) => !/^0\d+/.test(val), {
+    message: "",
+  });
+
 export const dealSchema = z.object({
   dealName: z
     .string()
     .min(2, "მინიმუმ 2 სიმბოლო")
     .max(20, "მაქსიმუმ 20 სიმბოლო"),
-  inspectionDays: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
+  inspectionDays: positiveNumber,
   currency: z.string().nonempty("აირჩიეთ ვალუტა"),
   payer: z.enum(["seller", "buyer", "equal"]),
-  shippingDays: z.number().min(1, "უნდა იყოს მინიმუმ 1"),
+  shippingDays: positiveNumber,
 });
 
 export const itemSchema = z.object({
@@ -35,7 +44,7 @@ export const itemSchema = z.object({
     .string()
     .min(2, "მინიმუმ 2 სიმბოლო")
     .max(50, "მაქსიმუმ 50 სიმბოლო"),
-  price: z.number().min(1, "მინიმუმ 1"),
+  price: positiveNumber,
   itemDescription: z
     .string()
     .min(20, "მინიმუმ 20 სიმბოლო")

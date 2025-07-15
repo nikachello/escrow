@@ -40,14 +40,14 @@ export async function POST(req: Request) {
         sellerReceivable: totals.totalReceivable,
         buyerPay: totals.totalPay,
         whoPays: deal.payer,
-        shippingDays: deal.shippingDays,
-        inspectionDays: deal.inspectionDays,
+        shippingDays: Number(deal.shippingDays),
+        inspectionDays: Number(deal.inspectionDays),
 
         items: {
           create: items.map((item) => ({
             name: item.itemName,
             description: item.itemDescription,
-            price: item.price,
+            price: Number(item.price),
             category: item.itemCategory,
           })),
         },

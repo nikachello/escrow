@@ -12,70 +12,17 @@ import { auth } from "@/lib/auth/auth";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
-import { DealStatus, DealStatusConfig, UserRole } from "@/lib/types/deal";
-import { dealStatusConfig } from "@/lib/config/deal";
+import { DealStatus, UserRole } from "@/lib/types/deal";
+import { getDealConfig } from "@/lib/actions/deal";
 
-export const actionHandlers = {
-  agree: agreeToDeal,
-  cancel: cancelDeal,
-  pay: payForDeal,
-  ship: shipDeal,
-  confirm_delivery: confirmDelivery,
-  complete: completeDeal,
-  dispute: disputeDeal,
+type Props = {
+  params: Promise<{ dealId: string }>;
 };
 
-// Helper function to get current config
-export function getDealConfig(
-  status: DealStatus,
-  role: UserRole
-): DealStatusConfig {
-  return dealStatusConfig[status][role];
-}
+export default async function DealPage({ params }: Props) {
+  const resolvedParams = await params;
+  const dealId = resolvedParams.dealId;
 
-// Your existing server actions stay the same
-export async function agreeToDeal(dealId: string) {
-  "use server";
-  // ... your existing implementation
-}
-
-export async function cancelDeal(dealId: string) {
-  "use server";
-  // ... your existing implementation
-}
-
-// Add other action handlers as needed
-export async function payForDeal(dealId: string) {
-  "use server";
-  // Implementation for payment
-}
-
-async function shipDeal(dealId: string) {
-  "use server";
-  // Implementation for shipping
-}
-
-async function confirmDelivery(dealId: string) {
-  "use server";
-  // Implementation for delivery confirmation
-}
-
-async function completeDeal(dealId: string) {
-  "use server";
-  // Implementation for completion
-}
-
-async function disputeDeal(dealId: string) {
-  "use server";
-  // Implementation for dispute
-}
-
-export default async function DealPage({
-  params,
-}: {
-  params: { dealId: string };
-}) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -85,7 +32,7 @@ export default async function DealPage({
   }
 
   const deal = await prisma.deal.findUnique({
-    where: { id: params.dealId },
+    where: { id: dealId },
     include: {
       items: true,
     },
@@ -155,9 +102,9 @@ export default async function DealPage({
                   {config.actions.map((action, index) => (
                     <form
                       key={index}
-                      action={actionHandlers[
-                        action.action as keyof typeof actionHandlers
-                      ]?.bind(null, deal.id)}
+                      // action={actionHandlers[
+                      //   action.action as keyof typeof actionHandlers
+                      // ]?.bind(null, deal.id)}
                     >
                       <Button type="submit" variant={action.variant}>
                         {action.label}

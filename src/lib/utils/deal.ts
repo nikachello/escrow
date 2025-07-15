@@ -1,4 +1,4 @@
-import { agreeToDeal } from "@/app/app/deal/[dealId]/page";
+// import { agreeToDeal } from "@/app/app/deal/[dealId]/page";
 import { dealStatusConfig } from "../config/deal";
 import { DealStatus, DealStatusConfig, UserRole } from "../types/deal";
 
