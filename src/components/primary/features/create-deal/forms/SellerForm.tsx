@@ -10,12 +10,7 @@ interface SellerInfoFormProps {
 const SellerInfoForm: React.FC<SellerInfoFormProps> = ({ control }) => {
   return (
     <div className="space-y-4">
-      <InputField
-        control={control}
-        name="email"
-        label="გამყიდველის ელ-ფოსტა"
-        placeholder="mail@gmail.com"
-      />
+      <InputField control={control} name="email" label="გამყიდველის ელ-ფოსტა" />
     </div>
   );
 };

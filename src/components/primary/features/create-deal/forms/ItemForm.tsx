@@ -49,7 +49,6 @@ const ItemForm: React.FC<ItemFormProps> = ({
             control={form.control}
             name="itemName"
             label="ნივთის დასახელება"
-            placeholder="ლურჯი მოსაცმელი"
           />
 
           <FormField

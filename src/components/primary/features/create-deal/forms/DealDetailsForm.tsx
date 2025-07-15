@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/aceternity/input";
 import InputField from "@/components/primary/forms/InputField";
 import SelectField from "@/components/primary/forms/SelectField";
 import { Currency, DealFormData } from "@/lib/types/create-deal";
+import TooltipCustom from "@/components/primary/ToolTipCustom";
 
 interface DealDetailsFormProps {
   control: Control<DealFormData>;
@@ -30,8 +31,8 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
         control={control}
         name="dealName"
         label="გარიგების სახელი"
-        placeholder="გარიგება 1"
         disabled={formDisabled}
+        tooltip="შეიყვანეთ გარიგების სახელი, რომ თქვენს გარიგებებში მას მარტივად მიაგნოთ"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -40,7 +41,13 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
           name="inspectionDays"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>შემოწმების დღეები</FormLabel>
+              <div className="flex items-center gap-2">
+                <FormLabel className="m-0">შემოწმების დღეები</FormLabel>
+                <TooltipCustom
+                  ButtonText="?"
+                  content="შეიყვანეთ თუ რამდენი დღე შეგიძლიათ ნივთის შემოწმება"
+                />
+              </div>
               <FormControl>
                 <Input {...field} disabled={formDisabled} />
               </FormControl>

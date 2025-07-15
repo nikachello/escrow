@@ -8,13 +8,15 @@ import {
 } from "@/components/ui/form";
 import React from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
+import TooltipCustom from "../ToolTipCustom";
 
-interface SelectFieldProps<T extends FieldValues> {
+interface InputFieldProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   control: Control<T>;
   disabled?: boolean;
+  tooltip?: string;
 }
 
 const InputField = <T extends FieldValues>({
@@ -23,14 +25,20 @@ const InputField = <T extends FieldValues>({
   placeholder,
   control,
   disabled,
-}: SelectFieldProps<T>) => {
+  tooltip,
+}: InputFieldProps<T>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel>{label}</FormLabel>
+          <FormLabel>
+            <div className="flex items-center gap-1">
+              {label}
+              {tooltip && <TooltipCustom ButtonText="?" content={tooltip} />}
+            </div>
+          </FormLabel>
 
           <FormControl>
             <Input
