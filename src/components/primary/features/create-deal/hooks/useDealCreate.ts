@@ -17,8 +17,10 @@ import {
 } from "@/lib/utils/deal-validation";
 import { FORM_MESSAGES } from "@/lib/constants/form-messages";
 import { prepareSubmissionData, submitDeal } from "@/lib/services/deal-api";
+import { useRouter } from "next/navigation";
 
 export const useDealCreate = () => {
+  const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
   // Custom hooks
@@ -82,10 +84,12 @@ export const useDealCreate = () => {
           currentUserEmail,
           totals
         );
-        await submitDeal(submissionData);
+        const deal = await submitDeal(submissionData);
 
         toast.success(FORM_MESSAGES.SUBMISSION_SUCCESS);
         resetAllForms();
+
+        router.push(`/app/deal/${deal.id}`);
       } catch (error) {
         console.error("Submission error:", error);
         toast.error(FORM_MESSAGES.SUBMISSION_ERROR);

@@ -25,7 +25,16 @@ export interface DealStatusConfig {
   actions?: {
     label: string;
     variant: "default" | "destructive" | "outline" | "secondary";
-    action: string;
+    action: DealAction;
   }[];
   timelineStatus: TimeLineStatus;
 }
+
+export type DealAction =
+  | "agree"
+  | "cancel"
+  | "pay"
+  | "ship"
+  | "confirm_delivery"
+  | "complete"
+  | "dispute";

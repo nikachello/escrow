@@ -87,6 +87,8 @@ export async function POST(req: Request) {
             },
           },
         });
+
+        // WIP: Register invited user
         await sendEmail({
           from: "Shuamavali <no-reply@shuamavali.com>",
           to: invitedUser.email,

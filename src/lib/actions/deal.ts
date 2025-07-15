@@ -1,57 +1,63 @@
-import { dealStatusConfig } from "../config/deal";
-import { DealStatus, DealStatusConfig, UserRole } from "../types/deal";
+"use server";
 
-// export const actionHandlers = {
-//   agree: agreeToDeal,
-//   cancel: cancelDeal,
-//   pay: payForDeal,
-//   ship: shipDeal,
-//   confirm_delivery: confirmDelivery,
-//   complete: completeDeal,
-//   dispute: disputeDeal,
-// };
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
+import { DEAL_STATUS } from "@prisma/client";
 
-// Helper function to get current config
-export function getDealConfig(
-  status: DealStatus,
-  role: UserRole
-): DealStatusConfig {
-  return dealStatusConfig[status][role];
+async function updateStatus(
+  dealId: string,
+  status: DEAL_STATUS,
+  successMsg: string
+) {
+  try {
+    await prisma.deal.update({
+      where: { id: dealId },
+      data: { status },
+    });
+
+    revalidatePath(`/deals/${dealId}`);
+    return { success: successMsg };
+  } catch (error) {
+    console.error(`${status} შეცდომა:`, error);
+    return { error: `${status} შეცდომა. გთხოვთ სცადოთ თავიდან.` };
+  }
 }
 
-// // Your existing server actions stay the same
-// export async function agreeToDeal(dealId: string) {
-//   "use server";
-//   // ... your existing implementation
-// }
+export async function agreeToDeal(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(dealId, "agreed", "თქვენ დაეთანხმეთ გარიგებას!");
+}
 
-// export async function cancelDeal(dealId: string) {
-//   "use server";
-//   // ... your existing implementation
-// }
+export async function cancelDeal(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(
+    dealId,
+    "cancelled",
+    "თქვენ წარმატებით გააუქმეთ გარიგება!"
+  );
+}
 
-// // Add other action handlers as needed
-// export async function payForDeal(dealId: string) {
-//   "use server";
-//   // Implementation for payment
-// }
+export async function payForDeal(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(dealId, "paid", "გადახდა წარმატებით განხორციელდა!");
+}
 
-// async function shipDeal(dealId: string) {
-//   "use server";
-//   // Implementation for shipping
-// }
+export async function shipDeal(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(dealId, "shipped", "ნივთი მოინიშნა გაგზავნილად!");
+}
 
-// async function confirmDelivery(dealId: string) {
-//   "use server";
-//   // Implementation for delivery confirmation
-// }
+export async function confirmDelivery(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(dealId, "delivered", "მიღება დადასტურდა წარმატებით!");
+}
 
-// async function completeDeal(dealId: string) {
-//   "use server";
-//   // Implementation for completion
-// }
+export async function completeDeal(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(dealId, "completed", "გარიგება დასრულდა წარმატებით!");
+}
 
-// async function disputeDeal(dealId: string) {
-//   "use server";
-//   // Implementation for dispute
-// }
+export async function disputeDeal(prevState: unknown, formData: FormData) {
+  const dealId = formData.get("dealId") as string;
+  return updateStatus(dealId, "disputed", "გარიგება წარმატებით გასაჩივრდა!");
+}

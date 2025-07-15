@@ -27,7 +27,7 @@ export const dealStatusConfig: Record<
         { label: "დათანხმება", variant: "default", action: "agree" },
         {
           label: "გარიგების გაუქმება",
-      variant: "destructive",
+          variant: "destructive",
           action: "cancel",
         },
       ],
