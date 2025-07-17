@@ -100,7 +100,7 @@ export async function POST(req: Request) {
               <p>თქვენთვის შეიქმნა გარიგება პლატფორმა Shuamavali.ge-ზე.</p>
               <p>
                 დეტალების სანახავად ეწვიეთ შემდეგ ბმულს:
-                <a href="${process.env.BASE_URL}/app/deal/${newDeal.id} style="color: #4A90E2;">იხილეთ გარიგება</a>
+                <a href="${process.env.BASE_URL}/app/deal/${newDeal.id}" style="color: #4A90E2;">იხილეთ გარიგება</a>
               </p>
               <hr />
               <small>ეს წერილი გამოგზავნილია ავტომატურად. გთხოვთ, არ უპასუხოთ.</small>

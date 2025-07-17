@@ -15,7 +15,9 @@ async function updateStatus(
       data: { status },
     });
 
-    revalidatePath(`/deals/${dealId}`);
+    // Revalidate the actual deal page after status update
+    // The route lives under /app/deal/[dealId]
+    revalidatePath(`/app/deal/${dealId}`);
     return { success: successMsg };
   } catch (error) {
     console.error(`${status} შეცდომა:`, error);
