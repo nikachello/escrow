@@ -144,7 +144,7 @@ async function refundTransaction(record: BOGRecord) {
     try {
       responseData = JSON.parse(responseText);
     } catch (e) {
-      console.error("Failed to parse BOG refund response JSON:", responseText);
+      console.error("Failed to parse BOG refund response JSON:", e);
     }
 
     if (!response.ok) {

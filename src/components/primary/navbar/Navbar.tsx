@@ -58,6 +58,16 @@ const Navbar = ({ session }: Props) => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-60" align="center">
                       <DropdownMenuGroup>
+                        <Link href="/app/my-deals">
+                          <DropdownMenuItem asChild>
+                            <button className="w-full text-left">
+                              <span className="hidden sm:inline">
+                                ჩემი გარიგებები
+                              </span>
+                              <span className="inline sm:hidden">🤝</span>
+                            </button>
+                          </DropdownMenuItem>
+                        </Link>
                         <DropdownMenuItem>
                           <span className="hidden sm:inline">პარამეტრები</span>
                           <span className="inline sm:hidden">⚙️</span>

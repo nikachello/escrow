@@ -1,4 +1,5 @@
 import { DealCategory, UserRole } from "./types";
+import { DEAL_STATUS } from "@prisma/client";
 
 export const DEAL_CATEGORIES: DealCategory[] = [
   { id: "1", name_en: "Apparel", name_ka: "ტანსაცმელი" },
@@ -17,3 +18,30 @@ export const USER_ROLES: UserRole[] = [
   { id: 1, role: "seller", name_ka: "ვყიდი" },
   { id: 2, role: "buyer", name_ka: "ვყიდულობ" },
 ];
+
+export const dealStatusTranslations: Record<DEAL_STATUS, string> = {
+  cancelled: "გაუქმებული",
+  pending: "სჭირდება დათანხმება",
+  agreed: "შეთანხმებული",
+  paid: "გადახდილი",
+  shipped: "გაგზავნილი",
+  delivered: "მიწოდებული",
+  ispectionStarted: "შემოწმება დაწყებულია",
+  completed: "დასრულებული",
+  disputed: "გასაჩივრებული",
+};
+
+export const dealStatusVariants: Record<
+  DEAL_STATUS,
+  "default" | "secondary" | "destructive" | "outline" | "success"
+> = {
+  cancelled: "destructive",
+  pending: "secondary",
+  agreed: "default",
+  paid: "success",
+  shipped: "default",
+  delivered: "default",
+  ispectionStarted: "secondary",
+  completed: "default",
+  disputed: "destructive",
+};

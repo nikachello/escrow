@@ -17,6 +17,7 @@ interface InputFieldProps<T extends FieldValues> {
   control: Control<T>;
   disabled?: boolean;
   tooltip?: string;
+  type?: string;
 }
 
 const InputField = <T extends FieldValues>({
@@ -26,6 +27,7 @@ const InputField = <T extends FieldValues>({
   control,
   disabled,
   tooltip,
+  type = "text",
 }: InputFieldProps<T>) => {
   return (
     <FormField
@@ -42,7 +44,7 @@ const InputField = <T extends FieldValues>({
 
           <FormControl>
             <Input
-              type="text"
+              type={type}
               placeholder={placeholder}
               {...field}
               disabled={disabled}

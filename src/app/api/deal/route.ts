@@ -29,7 +29,6 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log(items);
     const newDeal = await prisma.deal.create({
       data: {
         buyerEmail: currentUserEmail,
