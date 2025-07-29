@@ -85,6 +85,7 @@ model Deal {
   name         String
 
   creatorRole UserRole?
+  creatorEmail     String?    
 
   sellerReceivable Float
   buyerPay Float

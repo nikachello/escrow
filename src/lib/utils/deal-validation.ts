@@ -1,7 +1,7 @@
 import { UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import { FORM_MESSAGES } from "@/lib/constants/form-messages";
-import { DealFormData, dealSellerData, ItemType } from "../types/create-deal";
+import { DealFormData, OtherPartyData, ItemType } from "../types/create-deal";
 
 export const validateDealDetails = async (
   dealForm: UseFormReturn<DealFormData>
@@ -19,8 +19,8 @@ export const validateItemForm = async (
   return await itemForm.trigger();
 };
 
-export const validateSellerInfo = async (
-  sellerInfoForm: UseFormReturn<dealSellerData>
+export const validateOtherPartyInfo = async (
+  sellerInfoForm: UseFormReturn<OtherPartyData>
 ): Promise<boolean> => {
   const isValid = await sellerInfoForm.trigger();
   if (!isValid) {
@@ -50,7 +50,7 @@ export const validateItemsExist = (itemsCount: number): boolean => {
 
 export const validateAllForSubmission = async (
   dealForm: UseFormReturn<DealFormData>,
-  sellerInfoForm: UseFormReturn<dealSellerData>,
+  otherPartyInfoForm: UseFormReturn<OtherPartyData>,
   itemsCount: number,
   sellerEmail: string,
   currentUserEmail: string | null,
@@ -64,7 +64,7 @@ export const validateAllForSubmission = async (
   }
 
   // Validate seller info
-  if (!(await validateSellerInfo(sellerInfoForm))) {
+  if (!(await validateOtherPartyInfo(otherPartyInfoForm))) {
     return false;
   }
 

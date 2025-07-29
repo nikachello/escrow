@@ -6,9 +6,9 @@ export const dealStatusConfig: Record<
 > = {
   pending: {
     buyer: {
-      title: "ველოდებით გამყიდველის თანხმობას",
+      title: "ველოდებით მეორე მხარის თანხმობას",
       description:
-        "მას შემდეგ რაც გამყიდველი გადახედავს გარიგებას, მას შეუძლია დაეთანხმოს ან გააუქმოს ის. გადაწყვეტილებას ელ-ფოსტაზე მიიღებთ",
+        "მას შემდეგ რაც მეორე მხარე გადახედავს გარიგებას, მას შეუძლია დაეთანხმოს ან გააუქმოს ის. გადაწყვეტილებას ელ-ფოსტაზე მიიღებთ",
       badge: {
         text: "● სჭირდება დათანხმება",
         variant: "secondary",
@@ -17,8 +17,7 @@ export const dealStatusConfig: Record<
     },
     seller: {
       title: "განიხილეთ და დაეთანხმეთ გარიგებას",
-      description:
-        "მყიდველმა შექმნა გარიგება, გთხოვთ გადაავლეთ თვალი და დაეთანხმეთ მას",
+      description: "გთხოვთ გადაავლოთ თვალი გარიგებას",
       badge: {
         text: "● სჭირდება დათანხმება",
         variant: "secondary",
@@ -50,7 +49,7 @@ export const dealStatusConfig: Record<
       timelineStatus: "payment",
     },
     seller: {
-      title: "ველოდებით მყიდველის გადახდას",
+      title: "ველოდებით გადახდას",
       description:
         "თქვენ დაეთანხმეთ გარიგებას. ახლა ველოდებით მყიდველისგან თანხის ჩარიცხვას. მის გადახდას ჩვენი სისტემა ავტომატურად აღიქვამს და ჩვენ ამის შესახებ შეტყობინებას გამოგიგზავნით. მას შემდეგ რაც თანხას მივიღებთ, შეგიძლიათ პროდუქცია აუღელვებლად გააგზავნოთ, თქვენი თანხა ჩვენთან საიმედოდ იქნება შენახული",
       badge: {
@@ -89,10 +88,10 @@ export const dealStatusConfig: Record<
     buyer: {
       title: "ნივთი გაიგზავნა",
       description:
-        "გამყიდველმა გაგზავნა ნივთი. ტრექინგ ნომერით შეგიძლიათ მისი მდებარეობის თვალყურის დევნება",
+        "გამყიდველმა ნივთები გამოაგზავნა. გთხოვთ დაელოდოთ ნივთების მიღებას, კითხვების შემთხვევაში მიმართეთ გამყიდველს ან ჩვენ",
       badge: {
         text: "● გაგზავნილია",
-        variant: "default",
+        variant: "outline",
       },
       actions: [
         { label: "მივიღე", variant: "default", action: "confirm_delivery" },
@@ -102,10 +101,10 @@ export const dealStatusConfig: Record<
     seller: {
       title: "ნივთი გაგზავნილია",
       description:
-        "ნივთი წარმატებით გაიგზავნა. ველოდებით მყიდველის მიერ მიღების დადასტურებას",
+        "სტატუსი წარმატებით შეიცვალა, ველოდებით მიღების დადასტურებას",
       badge: {
         text: "● გაგზავნილია",
-        variant: "default",
+        variant: "outline",
       },
       timelineStatus: "delivery",
     },
@@ -114,10 +113,10 @@ export const dealStatusConfig: Record<
     buyer: {
       title: "ნივთი მიღებულია",
       description:
-        "თქვენ დაადასტურეთ ნივთის მიღება. თუ ყველაფერი კარგადაა, დაასრულეთ გარიგება",
+        "თქვენ დაადასტურეთ ნივთის მიღება. გთხოვთ შეამოწმეთ ნივთები, კმაყოფილების შემთხვევაში დაასრულეთ გარიგება",
       badge: {
         text: "● მიღებულია",
-        variant: "default",
+        variant: "outline",
       },
       actions: [
         {
@@ -139,7 +138,7 @@ export const dealStatusConfig: Record<
         "მყიდველმა მიიღო ნივთი. ველოდებით მისი მხრიდან გარიგების დასრულებას",
       badge: {
         text: "● მიღებულია",
-        variant: "default",
+        variant: "outline",
       },
       timelineStatus: "inspection",
     },
@@ -147,10 +146,10 @@ export const dealStatusConfig: Record<
   completed: {
     buyer: {
       title: "გარიგება დასრულებულია",
-      description: "გარიგება წარმატებით დასრულდა. თანხა გადაეცა გამყიდველს",
+      description: "გარიგება წარმატებით დასრულდა. თანხა ჩაერიცხება გამყიდველს",
       badge: {
         text: "● დასრულებული",
-        variant: "default",
+        variant: "outline",
       },
       timelineStatus: "closed",
     },
@@ -160,7 +159,7 @@ export const dealStatusConfig: Record<
         "გარიგება წარმატებით დასრულდა. თანხა თქვენს ანგარიშზე ჩაირიცხება",
       badge: {
         text: "● დასრულებული",
-        variant: "default",
+        variant: "outline",
       },
       timelineStatus: "closed",
     },
@@ -169,7 +168,7 @@ export const dealStatusConfig: Record<
     buyer: {
       title: "გარიგება გაუქმებულია",
       description:
-        "გარიგება გაუქმდა. თუ გადახდა იყო განხორციელებული, თანხა დაუბრუნდება",
+        "გარიგება გაუქმდა. თუ თანხა გადახდილი იყო, ის უკან გადაირიცხება",
       badge: {
         text: "● გაუქმებული",
         variant: "destructive",
@@ -178,7 +177,8 @@ export const dealStatusConfig: Record<
     },
     seller: {
       title: "გარიგება გაუქმებულია",
-      description: "გარიგება გაუქმდა. ყველა ქმედება შეჩერებულია",
+      description:
+        "გარიგება გაუქმდა. თუ თანხა გადახდილი იყო, ის უკან გადაირიცხება",
       badge: {
         text: "● გაუქმებული",
         variant: "destructive",

@@ -54,11 +54,15 @@ export default async function DealPage({ params }: Props) {
     return redirect("/?error=not-authorized");
   }
 
-  const role: UserRole = userEmail === buyerEmail ? "buyer" : "seller";
   const status = deal.status as DealStatus;
 
   // Get configuration for current status and role
-  const config = getDealConfig(status, role);
+  const config = getDealConfig(
+    status,
+    userEmail,
+    normalizeEmail(deal.creatorEmail),
+    deal.creatorRole as UserRole
+  );
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-5">

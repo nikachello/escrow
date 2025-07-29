@@ -15,5 +15,5 @@ export const FORM_MESSAGES = {
   CREATE_DEAL_TITLE: "შექმენით გარიგება",
   CREATE_DEAL_DESCRIPTION: "შეიყვანეთ ყველა დეტალი ზუსტად და ყურადღებით",
   ITEMS_SECTION_TITLE: "ნივთები",
-  SELLER_INFO_SECTION_TITLE: "გამყიდველის ინფორმაცია",
+  SELLER_INFO_SECTION_TITLE: "მეორე მხარის ინფორმაცია",
 } as const;

@@ -1,6 +1,5 @@
 import { DealCategory, UserRole } from "./types";
 import { DEAL_STATUS } from "@prisma/client";
-import { Currency } from "./types/create-deal";
 import { CURRENCIES } from "./constants/create-deal";
 
 export const DEAL_CATEGORIES: DealCategory[] = [

@@ -7,17 +7,17 @@ interface OtherPartyFormProps {
   control: Control<OtherPartyData>;
 }
 
-const otherPartyInfoForm: React.FC<OtherPartyFormProps> = ({ control }) => {
+const OtherPartyInfoForm: React.FC<OtherPartyFormProps> = ({ control }) => {
   return (
     <div className="space-y-4">
       <InputField
         control={control}
         name="email"
-        label="გამყიდველის ელ-ფოსტა"
+        label="მეორე მხარის ელ-ფოსტა"
         type="email"
       />
     </div>
   );
 };
 
-export default otherPartyInfoForm;
+export default OtherPartyInfoForm;

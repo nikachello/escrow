@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         shippingDays: Number(deal.shippingDays),
         inspectionDays: Number(deal.inspectionDays),
         creatorRole: deal.creatorRole,
-
+        creatorEmail: currentUserEmail,
         items: {
           create: items.map((item) => ({
             name: item.itemName,
