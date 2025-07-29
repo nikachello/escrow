@@ -31,8 +31,6 @@ export function getDealConfig(
 ): DealStatusConfig {
   const normalize = (email: string) => email.trim().toLowerCase();
 
-  const isCreator = normalize(currentUserEmail) === normalize(creatorEmail);
-
   // Infer userRole based on perspective
   let roleToUse: UserRole;
 

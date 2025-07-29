@@ -61,20 +61,15 @@ const Navbar = ({ session }: Props) => {
                         <Link href="/app/my-deals">
                           <DropdownMenuItem asChild>
                             <button className="w-full text-left">
-                              <span className="hidden sm:inline">
-                                ჩემი გარიგებები
-                              </span>
-                              <span className="inline sm:hidden">🤝</span>
+                              <span className="inline">ჩემი გარიგებები</span>
                             </button>
                           </DropdownMenuItem>
                         </Link>
                         <DropdownMenuItem>
-                          <span className="hidden sm:inline">პარამეტრები</span>
-                          <span className="inline sm:hidden">⚙️</span>
+                          <span className="inline">პარამეტრები</span>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={handleLogOut}>
-                          <span className="hidden sm:inline">გასვლა</span>
-                          <span className="inline sm:hidden">🚪</span>
+                          <span className="inline">გასვლა</span>
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
