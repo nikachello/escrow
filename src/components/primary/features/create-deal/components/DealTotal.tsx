@@ -17,16 +17,17 @@ type Props = {
 const DealTotal = ({ dealData, totals }: Props) => {
   const { totalItemsPrice, totalPay, totalReceivable } = totals;
 
-  const currencyName = CURRENCIES.find(
-    (c) => c.id === dealData.currency
-  )?.name_ka;
+  const currency = CURRENCIES.find((c) => c.id === dealData.currency);
+  const currencyName = currency?.name_ka ?? "";
+  const currencySymbol = currency?.symbol ?? "";
 
-  // Format number to string with 2 decimals
-  const formatPrice = (num: number) => Number(num);
+  // ✅ Format number to 2 decimal places as string
+  const formatPrice = (num: number) => num.toFixed(2);
 
   return (
     <div className="p-4 bg-gray-50 rounded-md">
       <h3 className="text-xl font-heading font-semibold mb-2">შეჯამება</h3>
+
       <p>
         <strong>სერვისის თანხას იხდის:</strong>{" "}
         {dealData.payer === "buyer"
@@ -35,14 +36,17 @@ const DealTotal = ({ dealData, totals }: Props) => {
             ? "გამყიდველი"
             : "ნახევარ-ნახევარი"}
       </p>
-      <div className="space-y-4">
+
+      <div className="space-y-4 mt-2">
         <p>
           <strong>გარიგების ღირებულებაა:</strong> {formatPrice(totalItemsPrice)}{" "}
           {currencyName}
         </p>
+
         <p>
           <strong>სერვისის ღირებულება:</strong>{" "}
-          {formatPrice(totalItemsPrice * 0.05)} {currencyName} <br />
+          {formatPrice(totalItemsPrice * 0.05)} {currencyName}
+          <br />
           <strong>თქვენი გადასახდელი თანხა:</strong> {formatPrice(totalPay)}{" "}
           {currencyName}
           <br />

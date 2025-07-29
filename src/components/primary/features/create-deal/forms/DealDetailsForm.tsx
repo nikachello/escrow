@@ -74,7 +74,7 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
             { id: "equal", name_ka: "თანაბრად", name_en: "Half/half" },
           ]}
           placeholder="ვინ იხდის?"
-          label="ვინ იხდის მომსახურების თანხას?"
+          label="ვინ იხდის საიტის მომსახურების თანხას?"
           disabled={formDisabled}
         />
 

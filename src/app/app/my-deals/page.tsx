@@ -23,6 +23,13 @@ export default async function Page() {
     redirect("/");
   }
 
+  const sellerDeals = await prisma.deal.findMany({
+    where: {
+      sellerEmail: userEmail,
+      status: "completed", // or: { in: ["completed", "delivered", "paid"] }
+    },
+  });
+
   const deals = await prisma.deal.findMany({
     where: {
       OR: [{ buyerEmail: userEmail }, { sellerEmail: userEmail }],
@@ -33,7 +40,11 @@ export default async function Page() {
   });
   return (
     <div className="container mx-auto p-6 max-w-3xl">
-      <DealTable deals={deals} userEmail={userEmail} />
+      <DealTable
+        deals={deals}
+        userEmail={userEmail}
+        sellerDeals={sellerDeals}
+      />
     </div>
   );
 }
