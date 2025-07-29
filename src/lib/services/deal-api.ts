@@ -36,12 +36,6 @@ export const prepareSubmissionData = (
 export const submitDeal = async (
   submissionData: DealSubmissionData
 ): Promise<Deal> => {
-  // TODO: Replace with actual API call
-  console.log("Submitting deal:", submissionData);
-
-  // Simulate API call delay
-
-  // In a real implementation, this would be:
   const response = await fetch("/api/deal", {
     method: "POST",
     headers: {
@@ -60,9 +54,5 @@ export const submitDeal = async (
 export const saveDealDraft = async (
   submissionData: Partial<DealSubmissionData>
 ): Promise<void> => {
-  // TODO: Implement draft saving functionality
   console.log("Saving draft:", submissionData);
-
-  // This could save to localStorage or send to API
-  // localStorage.setItem('dealDraft', JSON.stringify(submissionData));
 };
