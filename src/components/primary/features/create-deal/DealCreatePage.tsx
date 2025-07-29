@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -11,7 +12,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Form } from "@/components/ui/form";
 
-// Feature components
 import DealDetailsForm from "@/components/primary/features/create-deal/forms/DealDetailsForm";
 import ItemForm from "@/components/primary/features/create-deal/forms/ItemForm";
 import DealTotal from "@/components/primary/features/create-deal/components/DealTotal";
@@ -26,12 +26,27 @@ import SubmitButton from "./components/SubmitButton";
 import ItemsList from "./components/ItemList";
 import OtherPartyInfoForm from "./forms/OtherPartyForm";
 
-// UI components
-
 const DealCreatePage: React.FC = () => {
   const { state, forms, data, handlers } = useDealCreate();
+  const searchParams = useSearchParams();
 
-  // Loading state
+  // Prefill inputs from URL
+  useEffect(() => {
+    const name = searchParams.get("name");
+    const shippingDays = searchParams.get("shippingDays");
+
+    if (name) {
+      forms.dealForm.setValue("dealName", name);
+    }
+
+    if (shippingDays) {
+      const parsed = parseFloat(shippingDays);
+      if (!isNaN(parsed)) {
+        forms.dealForm.setValue("shippingDays", parsed.toString());
+      }
+    }
+  }, [searchParams, forms.dealForm, forms.itemForm]);
+
   if (state.loadingSession) {
     return <LoadSpinner message={FORM_MESSAGES.LOADING} />;
   }
@@ -56,14 +71,12 @@ const DealCreatePage: React.FC = () => {
               noValidate
               aria-live="polite"
             >
-              {/* Deal Details Section */}
               <DealDetailsForm
                 control={forms.dealForm.control}
                 formDisabled={state.formDisabled}
                 currencies={CURRENCIES}
               />
 
-              {/* Form Disabled Notice */}
               {state.formDisabled && (
                 <FormDisabledNotice
                   message={FORM_MESSAGES.FORM_DISABLED_NOTICE}
@@ -72,7 +85,6 @@ const DealCreatePage: React.FC = () => {
 
               <Separator />
 
-              {/* Items Section */}
               <FormSection
                 title={FORM_MESSAGES.ITEMS_SECTION_TITLE}
                 ariaLabel="ნივთები"
@@ -91,7 +103,6 @@ const DealCreatePage: React.FC = () => {
                 />
               </FormSection>
 
-              {/* Deal Total Section */}
               {state.formDisabled && (
                 <DealTotal
                   items={data.items}
@@ -102,7 +113,6 @@ const DealCreatePage: React.FC = () => {
 
               <Separator />
 
-              {/* Seller Info Section */}
               <FormSection
                 title={FORM_MESSAGES.SELLER_INFO_SECTION_TITLE}
                 ariaLabel="მეორე მხარის ინფორმაცია"
@@ -112,7 +122,6 @@ const DealCreatePage: React.FC = () => {
                 />
               </FormSection>
 
-              {/* Submit Button */}
               <SubmitButton
                 disabled={state.submitting}
                 isSubmitting={state.submitting}

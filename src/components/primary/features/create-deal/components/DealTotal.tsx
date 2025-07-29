@@ -45,7 +45,7 @@ const DealTotal = ({ dealData, totals }: Props) => {
 
         <p>
           <strong>სერვისის ღირებულება:</strong>{" "}
-          {formatPrice(totalItemsPrice * 0.05)} {currencyName}
+          {formatPrice(totalItemsPrice * 0.05)} {currencySymbol}
           <br />
           <strong>თქვენი გადასახდელი თანხა:</strong> {formatPrice(totalPay)}{" "}
           {currencyName}

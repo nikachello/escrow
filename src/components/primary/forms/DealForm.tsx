@@ -1,76 +1,86 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { dealSchema } from "@/lib/validations";
+
+import { authClient } from "@/lib/auth/auth-client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import InputField from "./InputField";
+
 import {
   Form,
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormControl,
   FormMessage,
 } from "@/components/ui/form";
 
-import { DEAL_CATEGORIES, USER_ROLES } from "@/lib/constants";
-import SelectField from "./SelectField";
-import { Input } from "@/components/ui/input";
-
 export const DealForm = () => {
+  const router = useRouter();
+
+  // ✅ Get session using BetterAuth hook
+  const { data: session, isPending } = authClient.useSession();
+
   const form = useForm<z.infer<typeof dealSchema>>({
     resolver: zodResolver(dealSchema),
     defaultValues: {
-      userRole: "",
-      dealCategory: "",
+      dealName: "",
+      shippingDays: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof dealSchema>) => {
-    console.log(values);
+    if (!session?.user?.email) {
+      toast.error("გთხოვთ, გაიარეთ ავტორიზაცია ან დარეგისტრირდით");
+      return;
+    }
+
+    const params = new URLSearchParams({
+      name: values.dealName,
+      shippingDays: values.shippingDays.toString(),
+    });
+
+    router.push(`/app/create-deal?${params.toString()}`);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-        <SelectField
-          name="dealCategory"
+        <InputField
+          name="dealName"
           control={form.control}
-          label="გარიგების ტიპი"
-          options={DEAL_CATEGORIES}
-          placeholder="აირჩიეთ კატეგორია"
+          label="გარიგების სახელი"
         />
 
-        <SelectField
-          control={form.control}
-          label="ყიდით თუ ყიდულობთ?"
-          name="userRole"
-          options={USER_ROLES}
-          placeholder="აირჩიეთ ტიპი"
-        />
         <FormField
           control={form.control}
-          name="price"
+          name="shippingDays"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>გარიგების თანხა</FormLabel>
+              <FormLabel>ტრანსპორტირების დღეები</FormLabel>
               <FormControl>
-                <Input
-                  type="number"
-                  inputMode="numeric"
-                  placeholder="₾500"
-                  {...field}
-                />
+                <Input type="number" inputMode="numeric" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <span className="text-xs text-gray-400">
           ამ ღილაკზე დაჭერით თქვენ არ იხდით არაფერს
         </span>
-        <Button className="w-full cursor-pointer rounded-full" type="submit">
+
+        <Button
+          className="w-full cursor-pointer rounded-full"
+          type="submit"
+          disabled={isPending}
+        >
           გაგრძელება
         </Button>
       </form>
