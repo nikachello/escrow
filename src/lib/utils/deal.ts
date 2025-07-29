@@ -38,11 +38,17 @@ export function getDealConfig(
 
   if (status === "pending") {
     // Flip for pending: recipient must act
-    roleToUse = isCreator
-      ? creatorRole === "buyer"
-        ? "seller"
-        : "buyer"
-      : creatorRole;
+    // roleToUse = isCreator
+    //   ? creatorRole === "buyer"
+    //     ? "seller"
+    //     : "buyer"
+    //   : creatorRole;
+
+    if (creatorEmail === currentUserEmail) {
+      roleToUse = "buyer";
+    } else {
+      roleToUse = "seller";
+    }
   } else {
     // After agreement, roles act as-is
     roleToUse =
