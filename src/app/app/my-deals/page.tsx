@@ -27,8 +27,10 @@ export default async function Page() {
     where: {
       OR: [{ buyerEmail: userEmail }, { sellerEmail: userEmail }],
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
-
   return (
     <div className="container mx-auto p-6 max-w-3xl">
       <DealTable deals={deals} userEmail={userEmail} />

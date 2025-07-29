@@ -25,7 +25,7 @@ export const useDealCreate = () => {
 
   // Custom hooks
   const { currentUserEmail, loadingSession } = useCurrentUser();
-  const { dealForm, itemForm, sellerInfoForm } = useDealForms();
+  const { dealForm, itemForm, otherPartyInfoForm } = useDealForms();
   const { currencySymbol } = useCurrency(dealForm);
   const { items, addItem, removeItem, clearItems, hasItems } = useItems();
 
@@ -55,17 +55,22 @@ export const useDealCreate = () => {
   const resetAllForms = useCallback(() => {
     dealForm.reset();
     itemForm.reset();
-    sellerInfoForm.reset();
+    otherPartyInfoForm.reset();
     clearItems();
-  }, [dealForm, itemForm, sellerInfoForm, clearItems]);
+  }, [dealForm, itemForm, otherPartyInfoForm, clearItems]);
 
   const handleSubmit = useCallback(
     async (values: DealFormData) => {
-      const sellerData = sellerInfoForm.getValues();
+      const sellerData = otherPartyInfoForm.getValues();
+
+      if (!currentUserEmail) {
+        toast.error("მომხმარებლის ელ-ფოსტა ვერ მოიძებნა");
+        return;
+      }
 
       const isValid = await validateAllForSubmission(
         dealForm,
-        sellerInfoForm,
+        otherPartyInfoForm,
         items.length,
         sellerData.email,
         currentUserEmail,
@@ -97,7 +102,7 @@ export const useDealCreate = () => {
         setSubmitting(false);
       }
     },
-    [items, currentUserEmail, sellerInfoForm, resetAllForms, dealForm]
+    [items, currentUserEmail, otherPartyInfoForm, resetAllForms, dealForm]
   );
 
   return {
@@ -113,7 +118,7 @@ export const useDealCreate = () => {
     forms: {
       dealForm,
       itemForm,
-      sellerInfoForm,
+      otherPartyInfoForm,
       totals,
       currentUserEmail,
     },

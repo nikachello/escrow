@@ -36,6 +36,6 @@ export const useCurrentUser = () => {
   return {
     currentUserEmail,
     loadingSession,
-    isAuthenticated: currentUserEmail !== null,
+    isAuthenticated: currentUserEmail,
   };
 };

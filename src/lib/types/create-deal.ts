@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export type DealFormData = z.infer<typeof dealSchema>;
 export type ItemType = z.infer<typeof itemSchema>;
-export type dealSellerData = z.infer<typeof dealSellerSchema>;
+export type OtherPartyData = z.infer<typeof dealOtherPartySchema>;
 
 export interface Currency {
   id: string;
@@ -36,6 +36,9 @@ export const dealSchema = z.object({
   currency: z.string().nonempty("აირჩიეთ ვალუტა"),
   payer: z.enum(["seller", "buyer", "equal"]),
   shippingDays: positiveNumber,
+  creatorRole: z.enum(["buyer", "seller"], {
+    required_error: "მიუთითეთ თქვენი როლი გარიგებაში",
+  }),
 });
 
 export const itemSchema = z.object({
@@ -51,6 +54,6 @@ export const itemSchema = z.object({
     .max(1000, "მაქსიმუმ 1000 სიმბოლო"),
 });
 
-export const dealSellerSchema = z.object({
+export const dealOtherPartySchema = z.object({
   email: z.string().email("შეიყვანეთ სწორი ელ-ფოსტა"),
 });

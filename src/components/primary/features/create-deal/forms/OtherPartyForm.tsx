@@ -1,13 +1,13 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import InputField from "@/components/primary/forms/InputField";
-import { dealSellerData } from "@/lib/types/create-deal";
+import { OtherPartyData } from "@/lib/types/create-deal";
 
-interface SellerInfoFormProps {
-  control: Control<dealSellerData>;
+interface OtherPartyFormProps {
+  control: Control<OtherPartyData>;
 }
 
-const SellerInfoForm: React.FC<SellerInfoFormProps> = ({ control }) => {
+const otherPartyInfoForm: React.FC<OtherPartyFormProps> = ({ control }) => {
   return (
     <div className="space-y-4">
       <InputField
@@ -20,4 +20,4 @@ const SellerInfoForm: React.FC<SellerInfoFormProps> = ({ control }) => {
   );
 };
 
-export default SellerInfoForm;
+export default otherPartyInfoForm;

@@ -10,24 +10,24 @@ export interface DealTotals {
 export interface DealSubmissionData {
   deal: DealFormData;
   items: ItemType[];
-  seller: {
+  otherParty: {
     email: string;
   };
   totals: DealTotals;
-  currentUserEmail: string | null;
+  currentUserEmail: string;
 }
 
 export const prepareSubmissionData = (
   dealData: DealFormData,
   items: ItemType[],
-  sellerData: { email: string },
-  currentUserEmail: string | null,
+  OtherPartyData: { email: string },
+  currentUserEmail: string,
   totals: DealTotals
 ): DealSubmissionData => {
   return {
     deal: dealData,
     items,
-    seller: sellerData,
+    otherParty: OtherPartyData,
     totals,
     currentUserEmail,
   };

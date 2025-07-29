@@ -2,7 +2,7 @@
 import { Currency } from "../types/create-deal";
 
 export const CURRENCIES: Currency[] = [
-  { id: "lari", name_ka: "ლარი", symbol: "₾" },
-  { id: "usd", name_ka: "დოლარი", symbol: "$" },
-  { id: "rub", name_ka: "რუბლი", symbol: "₽" },
+  { id: "GEL", name_ka: "ლარი", symbol: "₾" },
+  { id: "USD", name_ka: "დოლარი", symbol: "$" },
+  { id: "RUB", name_ka: "რუბლი", symbol: "₽" },
 ];

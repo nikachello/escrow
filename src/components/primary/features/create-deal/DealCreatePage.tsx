@@ -24,7 +24,7 @@ import FormSection from "./components/FormSection";
 import { DEAL_CATEGORIES } from "@/lib/constants";
 import SubmitButton from "./components/SubmitButton";
 import ItemsList from "./components/ItemList";
-import SellerInfoForm from "./forms/SellerForm";
+import SellerInfoForm from "./forms/OtherPartyForm";
 
 // UI components
 
@@ -107,7 +107,7 @@ const DealCreatePage: React.FC = () => {
                 title={FORM_MESSAGES.SELLER_INFO_SECTION_TITLE}
                 ariaLabel="გამყიდველის ინფორმაცია"
               >
-                <SellerInfoForm control={forms.sellerInfoForm.control} />
+                <SellerInfoForm control={forms.otherPartyInfoForm.control} />
               </FormSection>
 
               {/* Submit Button */}

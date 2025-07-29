@@ -84,6 +84,8 @@ model Deal {
   currency       String    @default("lari")
   name         String
 
+  creatorRole UserRole?
+
   sellerReceivable Float
   buyerPay Float
   whoPays WhoPays
@@ -102,6 +104,11 @@ model Deal {
   Dispute        Dispute?
   items          Item[] 
   invitedUser      InvitedUser?
+}
+
+enum UserRole {
+  buyer
+  seller
 }
 
 model Item {

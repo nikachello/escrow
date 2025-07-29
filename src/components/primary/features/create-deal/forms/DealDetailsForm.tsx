@@ -78,6 +78,18 @@ const DealDetailsForm: React.FC<DealDetailsFormProps> = ({
           disabled={formDisabled}
         />
 
+        <SelectField
+          name="creatorRole"
+          control={control}
+          options={[
+            { id: "buyer", name_ka: "მყიდველი", name_en: "Buyer" },
+            { id: "seller", name_ka: "გამყიდველი", name_en: "Seller" },
+          ]}
+          placeholder="აირჩიეთ თქვენი როლი"
+          label="თქვენი როლი გარიგებაში"
+          disabled={formDisabled}
+        />
+
         <FormField
           control={control}
           name="shippingDays"

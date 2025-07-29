@@ -6,22 +6,22 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as DealSubmissionData;
-    const { deal, seller, totals, currentUserEmail, items } = body;
+    const { deal, otherParty, totals, currentUserEmail, items } = body;
 
+    // Validate required values
     if (
-      // buyer email
       !currentUserEmail ||
-      !seller.email ||
-      // amount without our service fee
+      !otherParty?.email ||
       !totals?.totalItemsPrice ||
       !deal?.currency ||
       !deal?.dealName ||
       !totals?.totalPay ||
-      !totals?.totalPay ||
       !deal?.payer ||
       !deal?.shippingDays ||
       !deal?.inspectionDays ||
-      !items
+      !deal?.creatorRole ||
+      !items ||
+      !items.length
     ) {
       return NextResponse.json(
         { error: "ინფორმაცია არასრულია." },
@@ -29,10 +29,31 @@ export async function POST(req: Request) {
       );
     }
 
+    // Prevent self-dealing
+    if (currentUserEmail === otherParty.email) {
+      return NextResponse.json(
+        { error: "თქვენ ვერ შექმნით გარიგებას საკუთარ თავთან." },
+        { status: 400 }
+      );
+    }
+
+    // Resolve roles
+    let buyerEmail: string;
+    let sellerEmail: string;
+
+    if (deal.creatorRole === "seller") {
+      sellerEmail = currentUserEmail;
+      buyerEmail = otherParty.email;
+    } else {
+      buyerEmail = currentUserEmail;
+      sellerEmail = otherParty.email;
+    }
+
+    // Create deal
     const newDeal = await prisma.deal.create({
       data: {
-        buyerEmail: currentUserEmail,
-        sellerEmail: seller.email,
+        buyerEmail,
+        sellerEmail,
         amount: totals.totalItemsPrice,
         currency: deal.currency,
         name: deal.dealName,
@@ -41,6 +62,7 @@ export async function POST(req: Request) {
         whoPays: deal.payer,
         shippingDays: Number(deal.shippingDays),
         inspectionDays: Number(deal.inspectionDays),
+        creatorRole: deal.creatorRole,
 
         items: {
           create: items.map((item) => ({
@@ -53,6 +75,7 @@ export async function POST(req: Request) {
       },
     });
 
+    // Notify buyer
     await sendEmail({
       from: "Shuamavali <no-reply@shuamavali.com>",
       to: newDeal.buyerEmail,
@@ -72,22 +95,22 @@ export async function POST(req: Request) {
       `,
     });
 
+    // Invite seller if not registered
     const existingUser = await prisma.user.findUnique({
-      where: { email: seller.email },
+      where: { email: sellerEmail },
     });
 
     if (!existingUser) {
       try {
         const invitedUser = await prisma.invitedUser.create({
           data: {
-            email: seller.email,
+            email: sellerEmail,
             deal: {
               connect: { id: newDeal.id },
             },
           },
         });
 
-        // WIP: Register invited user
         await sendEmail({
           from: "Shuamavali <no-reply@shuamavali.com>",
           to: invitedUser.email,
@@ -107,10 +130,8 @@ export async function POST(req: Request) {
           `,
         });
       } catch (error) {
-        console.log(error);
+        console.error("Invited user error:", error);
       }
-    } else {
-      //
     }
 
     return NextResponse.json(newDeal, { status: 201 });

@@ -3,10 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   dealSchema,
   itemSchema,
-  dealSellerSchema,
+  dealOtherPartySchema,
   DealFormData,
   ItemType,
-  dealSellerData,
+  OtherPartyData,
 } from "@/lib/types/create-deal";
 
 export const useDealForms = () => {
@@ -33,13 +33,13 @@ export const useDealForms = () => {
     },
   });
 
-  const sellerInfoForm = useForm<dealSellerData>({
-    resolver: zodResolver(dealSellerSchema),
+  const otherPartyInfoForm = useForm<OtherPartyData>({
+    resolver: zodResolver(dealOtherPartySchema),
     mode: "onChange",
     defaultValues: {
       email: "",
     },
   });
 
-  return { dealForm, itemForm, sellerInfoForm };
+  return { dealForm, itemForm, otherPartyInfoForm };
 };

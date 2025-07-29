@@ -11,7 +11,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Deal } from "@prisma/client";
-import { dealStatusTranslations, dealStatusVariants } from "@/lib/constants";
+import {
+  CurrencySymbolMap,
+  dealStatusTranslations,
+  dealStatusVariants,
+} from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
@@ -43,7 +47,9 @@ const DealTable = ({ userEmail, deals }: Props) => {
                   {dealStatusTranslations[deal.status]}
                 </Badge>
               </TableCell>
-              <TableCell className="cursor-pointer">{deal.amount}</TableCell>
+              <TableCell className="cursor-pointer">
+                {CurrencySymbolMap[deal.currency]} {deal.amount}
+              </TableCell>
               <TableCell className="cursor-pointer">
                 {deal.buyerEmail === userEmail ? "მყიდველი" : "გამყიდველი"}
               </TableCell>

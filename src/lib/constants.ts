@@ -1,5 +1,7 @@
 import { DealCategory, UserRole } from "./types";
 import { DEAL_STATUS } from "@prisma/client";
+import { Currency } from "./types/create-deal";
+import { CURRENCIES } from "./constants/create-deal";
 
 export const DEAL_CATEGORIES: DealCategory[] = [
   { id: "1", name_en: "Apparel", name_ka: "ტანსაცმელი" },
@@ -30,6 +32,14 @@ export const dealStatusTranslations: Record<DEAL_STATUS, string> = {
   completed: "დასრულებული",
   disputed: "გასაჩივრებული",
 };
+
+export const CurrencySymbolMap: Record<string, string> = CURRENCIES.reduce(
+  (acc, currency) => {
+    acc[currency.id] = currency.symbol;
+    return acc;
+  },
+  {} as Record<string, string>
+);
 
 export const dealStatusVariants: Record<
   DEAL_STATUS,
