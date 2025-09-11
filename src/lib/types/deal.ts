@@ -3,6 +3,7 @@ export type DealStatus =
   | "agreed"
   | "paid"
   | "shipped"
+  | "disputed"
   | "delivered"
   | "completed"
   | "cancelled";

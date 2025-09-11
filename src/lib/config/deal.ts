@@ -186,4 +186,26 @@ export const dealStatusConfig: Record<
       timelineStatus: "agreement",
     },
   },
+  disputed: {
+    buyer: {
+      title: "გარიგება გასაჩივრებულია",
+      description:
+        "გარიგება გასაჩივრდა. თანხა საშუამავლო ანგარიშზე იქნება შენახული, ჩვენი აგენტები ორივე მხარეს დაუკავშირდებიან",
+      badge: {
+        text: "● გასაჩივრებული",
+        variant: "destructive",
+      },
+      timelineStatus: "agreement",
+    },
+    seller: {
+      title: "გარიგება გასაჩივრებულია",
+      description:
+        "გარიგება გასაჩივრდა. თანხა საშუამავლო ანგარიშზე იქნება შენახული, ჩვენი აგენტები ორივე მხარეს დაუკავშირდებიან",
+      badge: {
+        text: "● გასაჩივრებული",
+        variant: "destructive",
+      },
+      timelineStatus: "agreement",
+    },
+  },
 };
