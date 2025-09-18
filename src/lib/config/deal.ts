@@ -1,3 +1,4 @@
+import FileUpload from "@/components/primary/FileUpload";
 import { DealStatus, DealStatusConfig, UserRole } from "../types/deal";
 
 export const dealStatusConfig: Record<
@@ -78,9 +79,8 @@ export const dealStatusConfig: Record<
         text: "● ველოდებით გაგზავნას",
         variant: "secondary",
       },
-      actions: [
-        { label: "ატვირთეთ ტრექინგი", variant: "default", action: "ship" },
-      ],
+      actions: [{ label: "დადასტურება", variant: "default", action: "ship" }],
+      customComponent: FileUpload,
       timelineStatus: "delivery",
     },
   },

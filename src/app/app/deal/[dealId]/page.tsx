@@ -101,6 +101,17 @@ export default async function DealPage({ params }: Props) {
               <h2 className="font-heading font-bold text-lg">{config.title}</h2>
               <p className="text-sm tracking-wide">{config.description}</p>
 
+              {config.customComponent && (
+                <div className="mt-4">
+                  <config.customComponent
+                    context="tracking"
+                    userId={session.user.id}
+                    dealId={dealId}
+                  />{" "}
+                  {/* ✅ Now it's JSX */}
+                </div>
+              )}
+
               {config.actions && config.actions.length > 0 && (
                 <div className="mt-4 flex gap-4">
                   {config.actions.map((action, index) => (

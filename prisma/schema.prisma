@@ -94,6 +94,8 @@ model Deal {
   shippingDays   Int?      // for physical
   inspectionDays Int
 
+  trackingImage String?
+
   status         DEAL_STATUS @default(pending)
 
   createdAt      DateTime @default(now())

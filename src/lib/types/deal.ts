@@ -1,3 +1,5 @@
+import { FileUploadProps } from "./fileUpload";
+
 export type DealStatus =
   | "pending"
   | "agreed"
@@ -29,6 +31,7 @@ export interface DealStatusConfig {
     action: DealAction;
   }[];
   timelineStatus: TimeLineStatus;
+  customComponent?: React.ComponentType<FileUploadProps>;
 }
 
 export type DealAction =
