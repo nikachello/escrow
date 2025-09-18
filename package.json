@@ -24,6 +24,7 @@
     "@tabler/icons-react": "^3.34.0",
     "@tailwindcss/cli": "^4.1.10",
     "@tailwindcss/postcss": "^4.1.10",
+    "@uploadthing/react": "^7.3.3",
     "better-auth": "^1.2.12",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -37,12 +38,14 @@
     "nextjs-toploader": "^3.8.16",
     "nodemailer": "^6.10.1",
     "nprogress": "^0.2.0",
+    "pinata": "^2.5.0",
     "radix-ui": "^1.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.58.1",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
+    "uploadthing": "^7.7.4",
     "zod": "^3.25.67"
   },
   "devDependencies": {

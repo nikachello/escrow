@@ -1,3 +1,4 @@
+import FileUpload from "@/components/primary/FileUpload";
 import { DealStatus, DealStatusConfig, UserRole } from "../types/deal";
 
 export const dealStatusConfig: Record<
@@ -78,9 +79,8 @@ export const dealStatusConfig: Record<
         text: "● ველოდებით გაგზავნას",
         variant: "secondary",
       },
-      actions: [
-        { label: "ატვირთეთ ტრექინგი", variant: "default", action: "ship" },
-      ],
+      actions: [{ label: "დადასტურება", variant: "default", action: "ship" }],
+      customComponent: FileUpload,
       timelineStatus: "delivery",
     },
   },
@@ -181,6 +181,28 @@ export const dealStatusConfig: Record<
         "გარიგება გაუქმდა. თუ თანხა გადახდილი იყო, ის უკან გადაირიცხება",
       badge: {
         text: "● გაუქმებული",
+        variant: "destructive",
+      },
+      timelineStatus: "agreement",
+    },
+  },
+  disputed: {
+    buyer: {
+      title: "გარიგება გასაჩივრებულია",
+      description:
+        "გარიგება გასაჩივრდა. თანხა საშუამავლო ანგარიშზე იქნება შენახული, ჩვენი აგენტები ორივე მხარეს დაუკავშირდებიან",
+      badge: {
+        text: "● გასაჩივრებული",
+        variant: "destructive",
+      },
+      timelineStatus: "agreement",
+    },
+    seller: {
+      title: "გარიგება გასაჩივრებულია",
+      description:
+        "გარიგება გასაჩივრდა. თანხა საშუამავლო ანგარიშზე იქნება შენახული, ჩვენი აგენტები ორივე მხარეს დაუკავშირდებიან",
+      badge: {
+        text: "● გასაჩივრებული",
         variant: "destructive",
       },
       timelineStatus: "agreement",
