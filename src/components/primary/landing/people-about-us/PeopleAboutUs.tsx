@@ -1,49 +1,32 @@
+"use client";
+
 import React from "react";
 import LandingSection from "../LandingSection";
 import { InfiniteMovingCards } from "../../InfiniteMovingCards";
-
-const testimonialsPeople = [
-  {
-    quote:
-      "გარანტის საშუალებით ჩემი გაყიდვების რაოდენობა გაორმაგდა, მომხმარებლებთან ნდობის მოპოვება ძალიან გამარტივდა.",
-    name: "ნინო გაზდელიანი",
-    title: "ელ-კომერციის მენეჯერი",
-  },
-  {
-    quote:
-      "შემიძლია ჩემს დაკვეთაზე აუღელვებლად ვიმუშავო, ვიცი რომ მომხმარებელი მენდობა და გაუთვალისწინებელი გადაცილებისას არ იფიქრებს რომ ვატყუებ. მისი თანხა საიმედოდაა შენახული",
-    name: "სალომე შარიქაძე",
-    title: "დიზაინერი",
-  },
-  {
-    quote:
-      "ონლაინ ვაჭრობისას გამყიდველებს ყოველთვის გარანტის გამოყენებას ვთხოვ, რომელიც არ მთანხმდება ვიცი, რომ ხარისხის ან რაიმე სხვა პრობლემა ექნება",
-    name: "ციკო ლაშქარავა",
-    title: "დიასახლისი",
-  },
-  {
-    quote:
-      "საქართველოში ესქროუ სერვისის ნაკლებობა იყო, მიხარია რომ ეს სერვისი გამოჩნდა და შემიძლია ჩემს მომხმარებლებს ეს სერვისი ვურჩიო",
-    name: "ჯაბა ლეშკაშელი",
-  },
-];
+import { useTranslations } from "next-intl";
 
 const testimonialsBrands = [
-  {
-    image: "/images/brands/borbalo.png",
-  },
-  {
-    image: "/images/brands/cocacola.png",
-  },
+  { image: "/images/brands/borbalo.png" },
+  { image: "/images/brands/cocacola.png" },
   { image: "/images/brands/metro.png" },
   { image: "/images/brands/veranda.png" },
   { image: "/images/brands/barambo.png" },
 ];
 
 const PeopleAboutUs = () => {
+  const t = useTranslations("Landing");
+
+  // Map testimonial keys to array
+  const testimonialKeys = ["0", "1", "2", "3"];
+  const testimonialsPeople = testimonialKeys.map((key) => ({
+    quote: t(`testimonials.${key}.quote`),
+    name: t(`testimonials.${key}.name`),
+    title: t(`testimonials.${key}.title`),
+  }));
+
   return (
     <div className="overflow-x-hidden pb-15">
-      <LandingSection heading="რას ამბობენ ჩვენზე?">
+      <LandingSection heading={t("testimonialsHeading")}>
         <InfiniteMovingCards
           items={testimonialsPeople}
           className="text-center"

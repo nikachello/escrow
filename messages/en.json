@@ -1,0 +1,37 @@
+{
+  "Landing": {
+    "title1": "Trade Online",
+    "title2": "Securely",
+    "title3": "With Help",
+    "title4": "Of Garanti",
+    "howItWorks": "How Does Garanti Work?",
+    "testimonialsHeading": "People About Us",
+    "testimonials": {
+      "0": {
+        "quote": "With help of Garanti my sales were doubled, it is much easier to gain trust of my customers",
+        "name": "Nino Gazdeliani",
+        "title": "E-Commerce Manager"
+      },
+      "1": {
+        "quote": "I can work on my order relaxed, I know my customer believes me and if I will have any delays he won't think I am lying. Money is stored safely",
+        "name": "Salome Sharikadze",
+        "title": "Designer"
+      },
+      "2": {
+        "quote": "When I am shopping online I always demand to use Garanti. Those who deny I know they will scam me or send me low quality products",
+        "name": "Tsiko Lashkarava",
+        "title": "Online Shopper"
+      },
+      "3": {
+        "quote": "There was a lack of the escrow service on Georgian market, I am glad we now have Garanti, I can recommend the service to my customers",
+        "name": "Jaba Leshkasheli",
+        "title": "Business Consultant"
+      }
+    },
+    "offerToSellers": "Offer To Sellers",
+    "joinUs": "Join Us And Get Benefits",
+    "safeTransactions": "Safe Transactions",
+    "shopAccount": "Dedicated Shop",
+    "ratingSystem": "Rating System"
+  }
+}

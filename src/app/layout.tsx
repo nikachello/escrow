@@ -1,10 +1,10 @@
-// app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
-import Navbar from "@/components/primary/navbar/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from "nextjs-toploader";
 import { SessionProvider } from "@/context/SessionContext";
+import { NextIntlClientProvider } from "next-intl";
+import Navbar from "@/components/primary/navbar/Navbar";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -18,14 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html>
       <body
         className={`${geistSans.variable} ${geistMono.variable} tracking-wide`}
       >
         <SessionProvider>
           <NextTopLoader />
-          <Navbar />
-          {children}
+          <NextIntlClientProvider>
+            <Navbar />
+            {children}
+          </NextIntlClientProvider>
           <Toaster />
         </SessionProvider>
       </body>

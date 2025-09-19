@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth/auth-client";
 import Link from "next/link";
+import LanguageDropdown from "../LanguageDropdown";
 
 const Navbar = () => {
   const { session } = useSession();
@@ -32,6 +33,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center text-secondary py-4">
           <Logo size="md" />
           <div className="flex items-center gap-4">
+            <LanguageDropdown />
             {session?.user ? (
               <div className="flex flex-row items-center gap-5">
                 <Link href="/app/create-deal">
