@@ -32,6 +32,21 @@
     "joinUs": "Join Us And Get Benefits",
     "safeTransactions": "Safe Transactions",
     "shopAccount": "Dedicated Shop",
-    "ratingSystem": "Rating System"
+    "ratingSystem": "Rating System",
+    "faqHeading": "Frequently Asked Questions",
+    "faqs": {
+      "0": {
+        "question": "How does it work?",
+        "answer": "Seller or buyer creates deal on the website. Money of the buyer is stored securely on our website before he receives desired items or services"
+      },
+      "1": {
+        "question": "Do you have comission fees?",
+        "answer": "Our comission is 5% from each deal, minimum 1GEL, it can be paid by seller, buyer or equally"
+      },
+      "2": {
+        "question": "What happens if deal doesn't go through?",
+        "answer": "Before the transaction, both parties electronically sign an agreement that the requirements will be met. Otherwise, our agents will review the case and return the money accordingly."
+      }
+    }
   }
 }
