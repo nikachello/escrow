@@ -1,9 +1,11 @@
 import { sendEmail } from "@/lib/emailSender";
 import { prisma } from "@/lib/prisma";
 import { DealSubmissionData } from "@/lib/services/deal-api";
+import { getTranslations } from "next-intl/server";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  const t = await getTranslations("Errors");
   try {
     const body = (await req.json()) as DealSubmissionData;
     const { deal, otherParty, totals, currentUserEmail, items } = body;
@@ -23,18 +25,12 @@ export async function POST(req: Request) {
       !items ||
       !items.length
     ) {
-      return NextResponse.json(
-        { error: "ინფორმაცია არასრულია." },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: t("not_full_info") }, { status: 401 });
     }
 
     // Prevent self-dealing
     if (currentUserEmail === otherParty.email) {
-      return NextResponse.json(
-        { error: "თქვენ ვერ შექმნით გარიგებას საკუთარ თავთან." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: t("same_account") }, { status: 400 });
     }
 
     // Resolve roles
@@ -79,12 +75,12 @@ export async function POST(req: Request) {
     await sendEmail({
       from: "Shuamavali <no-reply@shuamavali.com>",
       to: newDeal.buyerEmail,
-      subject: `თქვენთვის შექმენით გარიგება - ${newDeal.name}`,
+      subject: `თქვენთვის შეიქმნა გარიგება - ${newDeal.name}`,
       text: "თქვენ შექმენით გარიგება, გთხოვთ ეწვიოთ ბმულს.",
       html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2>გამარჯობა,</h2>
-          <p>თქვენ შექმენით გარიგება პლატფორმა Shuamavali.ge-ზე.</p>
+          <p>თქვენ შექმენით გარიგება პლატფორმა Garanti.ge-ზე.</p>
           <p>
             დეტალების სანახავად ეწვიეთ შემდეგ ბმულს:
             <a href="${process.env.BASE_URL}/app/deal/${newDeal.id}" style="color: #4A90E2;">იხილეთ გარიგება</a>

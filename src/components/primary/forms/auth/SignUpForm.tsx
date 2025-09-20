@@ -16,12 +16,16 @@ import {
 import { Input } from "@/components/ui/aceternity/input";
 import { authClient } from "@/lib/auth/auth-client";
 import { signUpSchema } from "@/lib/types/auth";
+import { useTranslations } from "next-intl";
+import { ta } from "zod/v4/locales";
 
 type FormData = z.infer<typeof signUpSchema>;
 
 export function SignupForm() {
-  const [emailSent, setEmailSent] = useState(false);
+  const tAccount = useTranslations("Account");
+  const tMessages = useTranslations("Messages");
 
+  const [emailSent, setEmailSent] = useState(false);
   const form = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -66,9 +70,9 @@ export function SignupForm() {
               name="firstName"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>სახელი</FormLabel>
+                  <FormLabel>{tAccount("name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="გიორგი" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -79,9 +83,9 @@ export function SignupForm() {
               name="lastName"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>გვარი</FormLabel>
+                  <FormLabel>{tAccount("lastname")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="გიორგაშვილი" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,9 +99,9 @@ export function SignupForm() {
             name="nationalId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>პირადი ნომერი</FormLabel>
+                <FormLabel>{tAccount("national_id")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="01001010101" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,9 +114,9 @@ export function SignupForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ელ-ფოსტა</FormLabel>
+                <FormLabel>{tAccount("email")}</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="name@email.com" {...field} />
+                  <Input type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,7 +129,7 @@ export function SignupForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ტელეფონი</FormLabel>
+                <FormLabel>{tAccount("phone_number")}</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-neutral-500 select-none">
@@ -134,7 +138,6 @@ export function SignupForm() {
                     <Input
                       {...field}
                       type="tel"
-                      placeholder="5XXXXXXXX"
                       maxLength={9}
                       className="pl-14"
                     />
@@ -151,9 +154,9 @@ export function SignupForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>პაროლი</FormLabel>
+                <FormLabel>{tAccount("password")}</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -166,9 +169,9 @@ export function SignupForm() {
             name="repeatPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>გაიმეორეთ პაროლი</FormLabel>
+                <FormLabel>{tAccount("repeat_password")}</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -180,7 +183,7 @@ export function SignupForm() {
             type="submit"
             className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
           >
-            რეგისტრაცია &rarr;
+            {tAccount("register")} &rarr;
             <BottomGradient />
           </button>
 
@@ -190,8 +193,7 @@ export function SignupForm() {
 
       {emailSent && (
         <div className="text-green-600 text-center mt-4">
-          ✅ თქვენი რეგისტრაცია წარმატებით დასრულდა. გთხოვთ, გადაამოწმოთ
-          ელ-ფოსტა!
+          {tMessages("register_success")}
         </div>
       )}
     </div>

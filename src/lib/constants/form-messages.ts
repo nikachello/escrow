@@ -13,7 +13,7 @@ export const FORM_MESSAGES = {
   FORM_DISABLED_NOTICE:
     "გარიგების დეტალების შეცვლა შეუძლებელია, რადგან ნივთები უკვე დამატებულია.",
   CREATE_DEAL_TITLE: "შექმენით გარიგება",
-  CREATE_DEAL_DESCRIPTION: "შეიყვანეთ ყველა დეტალი ზუსტად და ყურადღებით",
+  CREATE_DEAL_DESCRIPTION: "შეიყვანეთ ყველა დეტალი ზუსტად",
   ITEMS_SECTION_TITLE: "ნივთები",
   SELLER_INFO_SECTION_TITLE: "მეორე მხარის ინფორმაცია",
 } as const;

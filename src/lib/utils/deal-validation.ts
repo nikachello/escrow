@@ -1,14 +1,17 @@
 import { UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
-import { FORM_MESSAGES } from "@/lib/constants/form-messages";
+
 import { DealFormData, OtherPartyData, ItemType } from "../types/create-deal";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 export const validateDealDetails = async (
   dealForm: UseFormReturn<DealFormData>
 ): Promise<boolean> => {
   const isValid = await dealForm.trigger();
+  const t = useTranslations("Validations");
   if (!isValid) {
-    toast.error(FORM_MESSAGES.DEAL_DETAILS_REQUIRED);
+    toast.error(t("deal_details_required"));
   }
   return isValid;
 };
@@ -23,26 +26,32 @@ export const validateOtherPartyInfo = async (
   sellerInfoForm: UseFormReturn<OtherPartyData>
 ): Promise<boolean> => {
   const isValid = await sellerInfoForm.trigger();
+  const t = useTranslations("ProfilePage");
   if (!isValid) {
-    toast.error(FORM_MESSAGES.SELLER_EMAIL_REQUIRED);
+    toast.error(t("seller_email_required"));
   }
   return isValid;
 };
 
-export const validateEmailMismatch = (
+export const validateEmailMismatch = async (
   sellerEmail: string,
   currentUserEmail: string | null
-): boolean => {
+): Promise<boolean> => {
   if (currentUserEmail && sellerEmail === currentUserEmail) {
-    toast.error(FORM_MESSAGES.EMAIL_MISMATCH);
+    const t = useTranslations("ProfilePage");
+    toast.error(t("email_mismatch"));
     return false;
   }
   return true;
 };
 
-export const validateItemsExist = (itemsCount: number): boolean => {
+export const validateItemsExist = async (
+  itemsCount: number
+): Promise<boolean> => {
   if (itemsCount === 0) {
-    toast.error(FORM_MESSAGES.MIN_ONE_ITEM);
+    const t = useTranslations("ProfilePage");
+
+    toast.error(t("min_one_item"));
     return false;
   }
   return true;

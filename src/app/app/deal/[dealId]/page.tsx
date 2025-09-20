@@ -14,12 +14,14 @@ import { redirect } from "next/navigation";
 import { DealStatus, UserRole } from "@/lib/types/deal";
 import { ActionButton } from "@/components/primary/features/deal/components/ActionButton";
 import { getDealConfig } from "@/lib/utils/deal";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ dealId: string }>;
 };
 
 export default async function DealPage({ params }: Props) {
+  const t = await getTranslations("Deal");
   const resolvedParams = await params;
   const dealId = resolvedParams.dealId;
 
@@ -57,7 +59,7 @@ export default async function DealPage({ params }: Props) {
   const status = deal.status as DealStatus;
 
   // Get configuration for current status and role
-  const config = getDealConfig(
+  const config = await getDealConfig(
     status,
     userEmail,
     normalizeEmail(deal.creatorEmail),
@@ -73,11 +75,16 @@ export default async function DealPage({ params }: Props) {
           </CardTitle>
           <CardDescription className="space-y-3">
             <div className="space-y-2 text-sm">
-              <p className="break-words">გარიგება {deal.id}</p>
               <p className="break-words">
-                <strong className="break-all">{deal.buyerEmail}</strong>{" "}
-                ყიდულობს {deal.items.length} ნივთს{" "}
-                <strong className="break-all">{deal.sellerEmail}</strong> - სგან
+                {t("deal")} {deal.id}
+              </p>
+              {/* WIP: Interpolate translations (<strong> tagebs ver vaketeb) */}
+              <p className="break-words">
+                {t("summary", {
+                  buyer: buyerEmail,
+                  count: deal.items.length,
+                  seller: sellerEmail,
+                })}
               </p>
             </div>
           </CardDescription>
@@ -108,7 +115,6 @@ export default async function DealPage({ params }: Props) {
                     userId={session.user.id}
                     dealId={dealId}
                   />{" "}
-                  {/* ✅ Now it's JSX */}
                 </div>
               )}
 

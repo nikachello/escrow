@@ -1,211 +1,213 @@
 import FileUpload from "@/components/primary/FileUpload";
 import { DealStatus, DealStatusConfig, UserRole } from "../types/deal";
+import { getTranslations } from "next-intl/server";
 
-export const dealStatusConfig: Record<
-  DealStatus,
-  Record<UserRole, DealStatusConfig>
-> = {
-  pending: {
-    buyer: {
-      title: "ველოდებით მეორე მხარის თანხმობას",
-      description:
-        "მას შემდეგ რაც მეორე მხარე გადახედავს გარიგებას, მას შეუძლია დაეთანხმოს ან გააუქმოს ის. გადაწყვეტილებას ელ-ფოსტაზე მიიღებთ",
-      badge: {
-        text: "● სჭირდება დათანხმება",
-        variant: "secondary",
+export async function getDealStatusConfig() {
+  const t = await getTranslations("DealStatus");
+
+  const config: Record<DealStatus, Record<UserRole, DealStatusConfig>> = {
+    pending: {
+      buyer: {
+        title: t("pending.buyer.title"),
+        description: t("pending.buyer.description"),
+        badge: {
+          text: t("pending.buyer.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "agreement",
       },
-      timelineStatus: "agreement",
+      seller: {
+        title: t("pending.seller.title"),
+        description: t("pending.seller.description"),
+        badge: {
+          text: t("pending.seller.badge"),
+          variant: "secondary",
+        },
+        actions: [
+          {
+            label: t("pending.seller.actions.agree"),
+            variant: "default",
+            action: "agree",
+          },
+          {
+            label: t("pending.seller.actions.cancel"),
+            variant: "destructive",
+            action: "cancel",
+          },
+        ],
+        timelineStatus: "agreement",
+      },
     },
-    seller: {
-      title: "განიხილეთ და დაეთანხმეთ გარიგებას",
-      description: "გთხოვთ გადაავლოთ თვალი გარიგებას",
-      badge: {
-        text: "● სჭირდება დათანხმება",
-        variant: "secondary",
+
+    agreed: {
+      buyer: {
+        title: t("agreed.buyer.title"),
+        description: t("agreed.buyer.description"),
+        badge: {
+          text: t("agreed.buyer.badge"),
+          variant: "secondary",
+        },
+        actions: [
+          {
+            label: t("agreed.buyer.actions.pay"),
+            variant: "default",
+            action: "pay",
+          },
+        ],
+        timelineStatus: "payment",
       },
-      actions: [
-        { label: "დათანხმება", variant: "default", action: "agree" },
-        {
-          label: "გარიგების გაუქმება",
+      seller: {
+        title: t("agreed.seller.title"),
+        description: t("agreed.seller.description"),
+        badge: {
+          text: t("agreed.seller.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "payment",
+      },
+    },
+
+    paid: {
+      buyer: {
+        title: t("paid.buyer.title"),
+        description: t("paid.buyer.description"),
+        badge: {
+          text: t("paid.buyer.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "delivery",
+      },
+      seller: {
+        title: t("paid.seller.title"),
+        description: t("paid.seller.description"),
+        badge: {
+          text: t("paid.seller.badge"),
+          variant: "secondary",
+        },
+        customComponent: FileUpload,
+        timelineStatus: "delivery",
+      },
+    },
+
+    shipped: {
+      buyer: {
+        title: t("shipped.buyer.title"),
+        description: t("shipped.buyer.description"),
+        badge: {
+          text: t("shipped.buyer.badge"),
+          variant: "secondary",
+        },
+        actions: [
+          {
+            label: t("shipped.buyer.actions.confirmDelivery"),
+            variant: "default",
+            action: "confirm_delivery",
+          },
+        ],
+        timelineStatus: "delivery",
+      },
+      seller: {
+        title: t("shipped.seller.title"),
+        description: t("shipped.seller.description"),
+        badge: {
+          text: t("shipped.seller.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "delivery",
+      },
+    },
+
+    delivered: {
+      buyer: {
+        title: t("delivered.buyer.title"),
+        description: t("delivered.buyer.description"),
+        badge: {
+          text: t("delivered.buyer.badge"),
+          variant: "secondary",
+        },
+        actions: [
+          {
+            label: t("delivered.buyer.actions.confirm"),
+            variant: "default",
+            action: "complete",
+          },
+        ],
+        timelineStatus: "closed",
+      },
+      seller: {
+        title: t("delivered.seller.title"),
+        description: t("delivered.seller.description"),
+        badge: {
+          text: t("delivered.seller.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "closed",
+      },
+    },
+
+    completed: {
+      buyer: {
+        title: t("completed.buyer.title"),
+        description: t("completed.buyer.description"),
+        badge: {
+          text: t("completed.buyer.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "closed",
+      },
+      seller: {
+        title: t("completed.seller.title"),
+        description: t("completed.seller.description"),
+        badge: {
+          text: t("completed.seller.badge"),
+          variant: "secondary",
+        },
+        timelineStatus: "closed",
+      },
+    },
+
+    cancelled: {
+      buyer: {
+        title: t("cancelled.buyer.title"),
+        description: t("cancelled.buyer.description"),
+        badge: {
+          text: t("cancelled.buyer.badge"),
           variant: "destructive",
-          action: "cancel",
         },
-      ],
-      timelineStatus: "agreement",
-    },
-  },
-  agreed: {
-    buyer: {
-      title: "დროა გადაიხადოთ",
-      description:
-        "თქვენ უნდა გადაიხადოთ თანხა, ის დაცულად იქნება შენახული ჩვენთან სანამ კუთვნილ ნივთებს ან სერვისს არ მიიღებთ. თქვენს გადახდას ჩვენი სისტემა ავტომატურად აღიქვამს და შეთანხმებაც შემდეგ ეტაპზე გადავა",
-      badge: {
-        text: "● ველოდებით გადახდას",
-        variant: "secondary",
+        timelineStatus: "closed",
       },
-      actions: [
-        { label: "გადახდა", variant: "default", action: "pay" },
-        { label: "გაუქმება", variant: "destructive", action: "cancel" },
-      ],
-      timelineStatus: "payment",
-    },
-    seller: {
-      title: "ველოდებით გადახდას",
-      description:
-        "თქვენ დაეთანხმეთ გარიგებას. ახლა ველოდებით მყიდველისგან თანხის ჩარიცხვას. მის გადახდას ჩვენი სისტემა ავტომატურად აღიქვამს და ჩვენ ამის შესახებ შეტყობინებას გამოგიგზავნით. მას შემდეგ რაც თანხას მივიღებთ, შეგიძლიათ პროდუქცია აუღელვებლად გააგზავნოთ, თქვენი თანხა ჩვენთან საიმედოდ იქნება შენახული",
-      badge: {
-        text: "● ველოდებით გადახდას",
-        variant: "secondary",
-      },
-      timelineStatus: "payment",
-    },
-  },
-  paid: {
-    buyer: {
-      title: "გადახდა შესრულებულია",
-      description:
-        "მშვენიერია, თქვენი გადახდა სისტემაში ასახულია და ჩვენის ამის შესახებ გამყიდველს უკვე ვაცნობეთ! ახლა დაელოდეთ იმას, თუ როდის გამოგიგზავნით ის ნივთებს. სიახლეებს ელ-ფოსტისა და ამ გვერდის საშუალებით იხილავთ",
-      badge: {
-        text: "● ველოდებით გაგზავნას",
-        variant: "secondary",
-      },
-      timelineStatus: "delivery",
-    },
-    seller: {
-      title: "გაგზავნეთ ნივთი",
-      description:
-        "მომხმარებელმა თანხა გადაიხადა. ახლა თქვენ შეგიძლიათ ნივთები უსაფრთხოდ გააგზავნოთ. დაიმახსოვრეთ, რომ შეთანხმებულ ვადებში უნდა ჩაეტიოთ, წინააღმდეგ შემთხვევაში მომხმარებელს ჩივილი და თანხის დაბრუნება შეეძლება",
-      badge: {
-        text: "● ველოდებით გაგზავნას",
-        variant: "secondary",
-      },
-      actions: [{ label: "დადასტურება", variant: "default", action: "ship" }],
-      customComponent: FileUpload,
-      timelineStatus: "delivery",
-    },
-  },
-  shipped: {
-    buyer: {
-      title: "ნივთი გაიგზავნა",
-      description:
-        "გამყიდველმა ნივთები გამოაგზავნა. გთხოვთ დაელოდოთ ნივთების მიღებას, კითხვების შემთხვევაში მიმართეთ გამყიდველს ან ჩვენ",
-      badge: {
-        text: "● გაგზავნილია",
-        variant: "outline",
-      },
-      actions: [
-        { label: "მივიღე", variant: "default", action: "confirm_delivery" },
-      ],
-      timelineStatus: "delivery",
-    },
-    seller: {
-      title: "ნივთი გაგზავნილია",
-      description:
-        "სტატუსი წარმატებით შეიცვალა, ველოდებით მიღების დადასტურებას",
-      badge: {
-        text: "● გაგზავნილია",
-        variant: "outline",
-      },
-      timelineStatus: "delivery",
-    },
-  },
-  delivered: {
-    buyer: {
-      title: "ნივთი მიღებულია",
-      description:
-        "თქვენ დაადასტურეთ ნივთის მიღება. გთხოვთ შეამოწმეთ ნივთები, კმაყოფილების შემთხვევაში დაასრულეთ გარიგება",
-      badge: {
-        text: "● მიღებულია",
-        variant: "outline",
-      },
-      actions: [
-        {
-          label: "გარიგების დასრულება",
-          variant: "default",
-          action: "complete",
-        },
-        {
-          label: "პრობლემის შეტყობინება",
+      seller: {
+        title: t("cancelled.seller.title"),
+        description: t("cancelled.seller.description"),
+        badge: {
+          text: t("cancelled.seller.badge"),
           variant: "destructive",
-          action: "dispute",
         },
-      ],
-      timelineStatus: "inspection",
-    },
-    seller: {
-      title: "ველოდებით დასრულებას",
-      description:
-        "მყიდველმა მიიღო ნივთი. ველოდებით მისი მხრიდან გარიგების დასრულებას",
-      badge: {
-        text: "● მიღებულია",
-        variant: "outline",
+        timelineStatus: "closed",
       },
-      timelineStatus: "inspection",
     },
-  },
-  completed: {
-    buyer: {
-      title: "გარიგება დასრულებულია",
-      description: "გარიგება წარმატებით დასრულდა. თანხა ჩაერიცხება გამყიდველს",
-      badge: {
-        text: "● დასრულებული",
-        variant: "outline",
+
+    disputed: {
+      buyer: {
+        title: t("disputed.buyer.title"),
+        description: t("disputed.buyer.description"),
+        badge: {
+          text: t("disputed.buyer.badge"),
+          variant: "destructive",
+        },
+        timelineStatus: "closed",
       },
-      timelineStatus: "closed",
-    },
-    seller: {
-      title: "გარიგება დასრულებულია",
-      description:
-        "გარიგება წარმატებით დასრულდა. თანხა თქვენს ანგარიშზე ჩაირიცხება",
-      badge: {
-        text: "● დასრულებული",
-        variant: "outline",
+      seller: {
+        title: t("disputed.seller.title"),
+        description: t("disputed.seller.description"),
+        badge: {
+          text: t("disputed.seller.badge"),
+          variant: "destructive",
+        },
+        timelineStatus: "closed",
       },
-      timelineStatus: "closed",
     },
-  },
-  cancelled: {
-    buyer: {
-      title: "გარიგება გაუქმებულია",
-      description:
-        "გარიგება გაუქმდა. თუ თანხა გადახდილი იყო, ის უკან გადაირიცხება",
-      badge: {
-        text: "● გაუქმებული",
-        variant: "destructive",
-      },
-      timelineStatus: "agreement",
-    },
-    seller: {
-      title: "გარიგება გაუქმებულია",
-      description:
-        "გარიგება გაუქმდა. თუ თანხა გადახდილი იყო, ის უკან გადაირიცხება",
-      badge: {
-        text: "● გაუქმებული",
-        variant: "destructive",
-      },
-      timelineStatus: "agreement",
-    },
-  },
-  disputed: {
-    buyer: {
-      title: "გარიგება გასაჩივრებულია",
-      description:
-        "გარიგება გასაჩივრდა. თანხა საშუამავლო ანგარიშზე იქნება შენახული, ჩვენი აგენტები ორივე მხარეს დაუკავშირდებიან",
-      badge: {
-        text: "● გასაჩივრებული",
-        variant: "destructive",
-      },
-      timelineStatus: "agreement",
-    },
-    seller: {
-      title: "გარიგება გასაჩივრებულია",
-      description:
-        "გარიგება გასაჩივრდა. თანხა საშუამავლო ანგარიშზე იქნება შენახული, ჩვენი აგენტები ორივე მხარეს დაუკავშირდებიან",
-      badge: {
-        text: "● გასაჩივრებული",
-        variant: "destructive",
-      },
-      timelineStatus: "agreement",
-    },
-  },
-};
+  };
+
+  return config;
+}

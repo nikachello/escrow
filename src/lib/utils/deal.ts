@@ -8,7 +8,7 @@ import {
   payForDeal,
   shipDeal,
 } from "../actions/deal";
-import { dealStatusConfig } from "../config/deal";
+import { getDealStatusConfig } from "../config/deal";
 import { DealStatus, DealStatusConfig, UserRole } from "../types/deal";
 
 export const actionHandlers = {
@@ -23,12 +23,12 @@ export const actionHandlers = {
 
 // Helper function to get current config
 
-export function getDealConfig(
+export async function getDealConfig(
   status: DealStatus,
   currentUserEmail: string,
   creatorEmail: string,
   creatorRole: UserRole
-): DealStatusConfig {
+): Promise<DealStatusConfig> {
   const normalize = (email: string) => email.trim().toLowerCase();
 
   // Infer userRole based on perspective
@@ -58,5 +58,7 @@ export function getDealConfig(
   }
 
   // ✅ Now TypeScript knows roleToUse is of type UserRole
+  const dealStatusConfig = await getDealStatusConfig();
+
   return dealStatusConfig[status][roleToUse];
 }

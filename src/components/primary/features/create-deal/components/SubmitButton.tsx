@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { FORM_MESSAGES } from "@/lib/constants/form-messages";
+
+import { useTranslations } from "next-intl";
 
 interface SubmitButtonProps {
   disabled: boolean;
@@ -18,9 +19,10 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   const isDisabled = disabled || !hasItems || isSubmitting;
 
   const getButtonText = () => {
-    if (isSubmitting) return FORM_MESSAGES.SUBMITTING;
-    if (!hasItems) return FORM_MESSAGES.NEXT;
-    return FORM_MESSAGES.NEXT;
+    const tValidations = useTranslations("Validations");
+    if (isSubmitting) return tValidations("submitting");
+    if (!hasItems) return tValidations("next");
+    return tValidations("next");
   };
 
   return (

@@ -16,7 +16,6 @@ import DealDetailsForm from "@/components/primary/features/create-deal/forms/Dea
 import ItemForm from "@/components/primary/features/create-deal/forms/ItemForm";
 import DealTotal from "@/components/primary/features/create-deal/components/DealTotal";
 import LoadSpinner from "../../loadSpinner";
-import { FORM_MESSAGES } from "@/lib/constants/form-messages";
 import { useDealCreate } from "./hooks/useDealCreate";
 import { CURRENCIES } from "@/lib/constants/create-deal";
 import FormDisabledNotice from "../../forms/formDisabledNotice";
@@ -25,8 +24,10 @@ import { DEAL_CATEGORIES } from "@/lib/constants";
 import SubmitButton from "./components/SubmitButton";
 import ItemsList from "./components/ItemList";
 import OtherPartyInfoForm from "./forms/OtherPartyForm";
+import { useTranslations } from "next-intl";
 
 const DealCreatePage: React.FC = () => {
+  const tValidation = useTranslations("Validations");
   const { state, forms, data, handlers } = useDealCreate();
   const searchParams = useSearchParams();
 
@@ -48,7 +49,7 @@ const DealCreatePage: React.FC = () => {
   }, [searchParams, forms.dealForm, forms.itemForm]);
 
   if (state.loadingSession) {
-    return <LoadSpinner message={FORM_MESSAGES.LOADING} />;
+    return <LoadSpinner message={tValidation("loading")} />;
   }
 
   return (
@@ -56,10 +57,10 @@ const DealCreatePage: React.FC = () => {
       <Card className="shadow-lg rounded-lg">
         <CardHeader>
           <CardTitle className="text-3xl font-bold tracking-tight">
-            {FORM_MESSAGES.CREATE_DEAL_TITLE}
+            {tValidation("create_deal_title")}
           </CardTitle>
           <CardDescription className="text-gray-600 dark:text-gray-400">
-            {FORM_MESSAGES.CREATE_DEAL_DESCRIPTION}
+            {tValidation("create_deal_description")}
           </CardDescription>
         </CardHeader>
 
@@ -79,14 +80,14 @@ const DealCreatePage: React.FC = () => {
 
               {state.formDisabled && (
                 <FormDisabledNotice
-                  message={FORM_MESSAGES.FORM_DISABLED_NOTICE}
+                  message={tValidation("form_disabled_notice")}
                 />
               )}
 
               <Separator />
 
               <FormSection
-                title={FORM_MESSAGES.ITEMS_SECTION_TITLE}
+                title={tValidation("items_section_title")}
                 ariaLabel="ნივთები"
               >
                 <ItemForm
@@ -114,7 +115,7 @@ const DealCreatePage: React.FC = () => {
               <Separator />
 
               <FormSection
-                title={FORM_MESSAGES.SELLER_INFO_SECTION_TITLE}
+                title={tValidation("seller_info_section_title")}
                 ariaLabel="მეორე მხარის ინფორმაცია"
               >
                 <OtherPartyInfoForm

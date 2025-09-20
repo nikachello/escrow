@@ -15,11 +15,13 @@ import {
   validateDealDetails,
   validateItemForm,
 } from "@/lib/utils/deal-validation";
-import { FORM_MESSAGES } from "@/lib/constants/form-messages";
 import { prepareSubmissionData, submitDeal } from "@/lib/services/deal-api";
 import { useRouter } from "nextjs-toploader/app";
+import { useTranslations } from "next-intl";
 
 export const useDealCreate = () => {
+  const tValidation = useTranslations("Validations");
+
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
@@ -41,13 +43,13 @@ export const useDealCreate = () => {
     const newItem = itemForm.getValues();
     addItem(newItem);
     itemForm.reset();
-    toast.success(FORM_MESSAGES.ITEM_ADDED);
+    toast.success(tValidation("item_added"));
   }, [dealForm, itemForm, addItem]);
 
   const handleRemoveItem = useCallback(
     (index: number) => {
       removeItem(index);
-      toast.info(FORM_MESSAGES.ITEM_REMOVED);
+      toast.info(tValidation("item_removed"));
     },
     [removeItem]
   );
@@ -91,13 +93,13 @@ export const useDealCreate = () => {
         );
         const deal = await submitDeal(submissionData);
 
-        toast.success(FORM_MESSAGES.SUBMISSION_SUCCESS);
+        toast.success(tValidation("submission_success"));
         resetAllForms();
 
         router.push(`/app/deal/${deal.id}`);
       } catch (error) {
         console.error("Submission error:", error);
-        toast.error(FORM_MESSAGES.SUBMISSION_ERROR);
+        toast.error(tValidation("submission_error"));
       } finally {
         setSubmitting(false);
       }

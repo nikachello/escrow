@@ -20,8 +20,11 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { useTranslations } from "next-intl";
 
 export const DealForm = () => {
+  const tDeals = useTranslations("Deal");
+  const tValidation = useTranslations("Validations");
   const router = useRouter();
 
   // ✅ Get session using BetterAuth hook
@@ -37,7 +40,7 @@ export const DealForm = () => {
 
   const onSubmit = (values: z.infer<typeof dealSchema>) => {
     if (!session?.user?.email) {
-      toast.error("გთხოვთ, გაიარეთ ავტორიზაცია ან დარეგისტრირდით");
+      toast.error(tValidation("not_authorized"));
       return;
     }
 
@@ -55,7 +58,7 @@ export const DealForm = () => {
         <InputField
           name="dealName"
           control={form.control}
-          label="გარიგების სახელი"
+          label={tDeals("deal_name")}
         />
 
         <FormField
@@ -63,7 +66,7 @@ export const DealForm = () => {
           name="shippingDays"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>ტრანსპორტირების დღეები</FormLabel>
+              <FormLabel>{tDeals("transportation_days")}</FormLabel>
               <FormControl>
                 <Input type="number" inputMode="numeric" {...field} />
               </FormControl>
@@ -72,16 +75,14 @@ export const DealForm = () => {
           )}
         />
 
-        <span className="text-xs text-gray-400">
-          ამ ღილაკზე დაჭერით თქვენ არ იხდით არაფერს
-        </span>
+        <span className="text-xs text-gray-400">{tDeals("not_paying")}</span>
 
         <Button
           className="w-full cursor-pointer rounded-full"
           type="submit"
           disabled={isPending}
         >
-          გაგრძელება
+          {tValidation("next")}
         </Button>
       </form>
     </Form>
