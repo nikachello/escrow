@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth/auth-client";
 import Link from "next/link";
 import LanguageDropdown from "../LanguageDropdown";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
   const { session } = useSession();
@@ -26,6 +27,9 @@ const Navbar = () => {
     await authClient.signOut();
     window.location.href = "/";
   };
+
+  const t = useTranslations("General");
+  const profileT = useTranslations("Account");
 
   return (
     <div className="bg-primary w-full shadow-sm">
@@ -37,7 +41,7 @@ const Navbar = () => {
             {session?.user ? (
               <div className="flex flex-row items-center gap-5">
                 <Link href="/app/create-deal">
-                  <Button variant="secondary">გარიგების შექმნა</Button>
+                  <Button variant="secondary">{t("create_deal")}</Button>
                 </Link>
 
                 <DropdownMenu>
@@ -47,7 +51,7 @@ const Navbar = () => {
                       className="flex items-center gap-2"
                     >
                       <span className="hidden md:inline">
-                        გამარჯობა, {session.user.firstName}
+                        {t("hello")}, {session.user.firstName}
                       </span>
                       <MenuIcon />
                     </Button>
@@ -57,15 +61,17 @@ const Navbar = () => {
                       <Link href="/app/my-deals">
                         <DropdownMenuItem asChild>
                           <button className="w-full text-left">
-                            <span className="inline">ჩემი გარიგებები</span>
+                            <span className="inline">
+                              {profileT("my_deals")}
+                            </span>
                           </button>
                         </DropdownMenuItem>
                       </Link>
                       <DropdownMenuItem>
-                        <span className="inline">პარამეტრები</span>
+                        <span className="inline">{t("settings")}</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={handleLogOut}>
-                        <span className="inline">გასვლა</span>
+                        <span className="inline">{profileT("signout")}</span>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
                   </DropdownMenuContent>

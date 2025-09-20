@@ -48,5 +48,35 @@
         "answer": "Before the transaction, both parties electronically sign an agreement that the requirements will be met. Otherwise, our agents will review the case and return the money accordingly."
       }
     }
+  },
+  "General": {
+    "hello": "Hello",
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "loading": "Loading..."
+  },
+  "Account": {
+    "register": "Register",
+    "login": "Login",
+    "signout": "Sign out",
+    "settings": "Settings",
+    "my_deals": "My deals",
+    "email": "Email",
+    "password": "Password",
+    "forget_password": "Reset password",
+    "return_to_login": "Login"
+  },
+  "Deal": {
+    "deal": "Deal",
+    "create": "Create",
+    "create_deal": "Create Deal",
+    "deal_name": "Deal name",
+    "transportation_days": "Shipping days",
+    "not_paying": "By clicking this you won't pay anything"
+  },
+  "Messages": {
+    "check_data": "Please check the data",
+    "cant_login": "Can't log in",
+    "reset_password_email": "A password recovery link has been sent to your email"
   }
 }

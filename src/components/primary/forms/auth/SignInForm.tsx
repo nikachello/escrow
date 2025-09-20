@@ -18,10 +18,15 @@ import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth/auth-client";
 import { toast } from "sonner";
 import { SignInSchema } from "@/lib/types/auth";
+import { useTranslations } from "next-intl";
 
 type FormData = z.infer<typeof SignInSchema>;
 
 export function SigninForm() {
+  const tMessages = useTranslations("Messages");
+  const tAccount = useTranslations("Account");
+  const tGeneral = useTranslations("General");
+
   const [view, setView] = useState<"signin" | "reset">("signin");
   const [loading, setLoading] = useState(false);
 
@@ -41,13 +46,13 @@ export function SigninForm() {
         password: values.password,
       });
       if (error?.status === 401) {
-        toast.error("გთხოვთ შეამოწმეთ მონაცემები", {});
+        toast.error(tMessages("check_data"), {});
       } else {
         setLoading(false);
         window.location.reload();
       }
     } catch (error) {
-      console.error("შესვლა ვერ მოხერხდა", error);
+      console.error(tMessages("cant_login"), error);
     } finally {
       setLoading(false);
     }
@@ -61,7 +66,7 @@ export function SigninForm() {
         email: values.email,
         redirectTo: "/reset-password",
       });
-      toast.info("პაროლის აღდგენის ბმული გაიგზავნა ელ-ფოსტაზე");
+      toast.info(tMessages("reset_password_email"));
       setView("signin");
     } finally {
       setLoading(false);
@@ -85,7 +90,7 @@ export function SigninForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ელ-ფოსტა</FormLabel>
+                <FormLabel>{tAccount("email")}</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -106,7 +111,7 @@ export function SigninForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>პაროლი</FormLabel>
+                  <FormLabel>{tAccount("password")}</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
@@ -131,7 +136,7 @@ export function SigninForm() {
                   loading ? "cursor-not-allowed opacity-70" : ""
                 }`}
               >
-                {loading ? "იტვირთება..." : "შესვლა →"}
+                {loading ? tGeneral("loading") : `${tAccount("login")} →`}
                 <BottomGradient />
               </button>
 
@@ -143,7 +148,7 @@ export function SigninForm() {
                 className="w-full"
                 variant="outline"
               >
-                დაგავიწყდა პაროლი?
+                {tAccount("forget_password")}
               </Button>
             </>
           ) : (
@@ -154,7 +159,7 @@ export function SigninForm() {
                 onClick={handleResetRequest}
                 className="w-full"
               >
-                {loading ? "გაგზავნა..." : "პაროლის აღდგენა"}
+                {loading ? tGeneral("loading") : tAccount("forget_password")}
               </Button>
               <Button
                 onClick={(e) => {
@@ -164,7 +169,7 @@ export function SigninForm() {
                 className="w-full"
                 variant="outline"
               >
-                დაბრუნება შესვლაზე
+                {tAccount("return_to_login")}
               </Button>
             </>
           )}

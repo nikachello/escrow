@@ -8,8 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { CircleUser } from "lucide-react";
 import { SigninForm } from "../../forms/auth/SignInForm";
+import { useTranslations } from "next-intl";
 
 const SignInDialog = () => {
+  const t = useTranslations("General");
+  const profileT = useTranslations("Account");
   return (
     <div>
       <Dialog>
@@ -17,7 +20,9 @@ const SignInDialog = () => {
           <CircleUser className="w-6 h-6 cursor-pointer" />
         </DialogTrigger>
         <DialogContent className="overflow-y-auto max-h-screen mt-5 mb-5">
-          <DialogTitle className="text-2xl font-bold">შესვლა</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">
+            {profileT("login")}
+          </DialogTitle>
           <SigninForm />
         </DialogContent>
       </Dialog>
